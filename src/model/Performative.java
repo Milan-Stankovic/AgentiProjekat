@@ -3,13 +3,13 @@ package model;
 public enum Performative {
 	INFORM,
 	REQUEST,
-	CFP,
+	CONTRACTNET,
 	REFUSE,
 	PROPOSE,
 	ACCEPT,
 	REJECT,
-	FAILURE,
-	INFORM_DONE,
-	INFORM_RESULT,
-	TIME_UP,
+	FAILED, 
+	DONE,
+	NEXT, 
+	OK
 }
