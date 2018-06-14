@@ -9,6 +9,7 @@ import javax.ejb.Lock;
 import javax.ejb.LockType;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.websocket.Session;
 
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 @Startup
@@ -16,6 +17,8 @@ import javax.ejb.Startup;
 public class Baza {
 	
 	private ArrayList<AgentType> tipovi = new ArrayList<>();
+	
+	private ArrayList<Session> sesije = new ArrayList<>();
 	
 	private HashMap<AID, Agent> agenti = new HashMap<>();
 	
@@ -65,6 +68,14 @@ public class Baza {
 		this.masterIp = masterIp;
 	}
 	
+	public ArrayList<Session> getSesije() {
+		return sesije;
+	}
+
+	public void setSesije(ArrayList<Session> sesije) {
+		this.sesije = sesije;
+	}
+
 	@Lock(LockType.WRITE)
 	public Boolean addAgent(Agent agent) {
 
