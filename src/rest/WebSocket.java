@@ -48,7 +48,7 @@ public class WebSocket implements WebSocketRemote {
 	
 
 	@OnMessage
-	public void message(Session session, DolazniWsDTO ws, boolean last) {
+	public void message(Session session, DolazniWsDTO ws) {
 		
 		if (session.isOpen()) {
 			

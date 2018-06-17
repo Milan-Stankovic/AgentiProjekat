@@ -43,8 +43,11 @@ public class Rest implements RestRemote {
 	
 	@GET
 	@Path("/test")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String test() {return "RADIII !!!";}
+	@Produces(MediaType.TEXT_PLAIN)
+	public String test() {
+		System.out.println("UPAO JE U TEST WTF ???");
+		
+		return "RADIII !!!";}
 	
 	@GET
 	@Path("/agents/classes")
