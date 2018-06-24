@@ -3,7 +3,6 @@ package model;
 public enum Performative {
 	INFORM,
 	REQUEST,
-	CONTRACTNET,
 	REFUSE,
 	PROPOSE,
 	ACCEPT,
@@ -11,5 +10,13 @@ public enum Performative {
 	FAILED, 
 	DONE,
 	NEXT, 
-	OK
+	OK,
+	CONTRACTNET,
+	STARTAI,
+	STARTGAN,
+	ENDGAN, 
+	RETURNRESULTGENERATOR,
+	RETURNRESULTDISCRIMINATOR
+	
+	
 }
