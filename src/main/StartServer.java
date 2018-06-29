@@ -53,7 +53,8 @@ public class StartServer {
 			db.setLokalniCentar(new AgentskiCentar(curentHostname, currentIp));
 			
 			//ako je kreirani cvor bas master dodam samo par tipova agenata
-			if(currentIp.equals(db.getMasterIp())) {
+			System.out.println("POREDIM SLEDECA 2:"+currentIp+"---"+db.getMasterIp());
+			if(/*currentIp.equals(db.getMasterIp())*/true) {
 				//TODO dodati tipove agenata
 				
 				System.out.println("Master node initiated. Prepare to be amazed.");

@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,7 @@ import javax.websocket.Session;
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 @Startup
 @Singleton
-public class Baza {
+public class Baza implements Serializable{
 	
 	private ArrayList<AgentType> tipovi = new ArrayList<>();
 	

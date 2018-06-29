@@ -25,6 +25,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
+import jms.JMSQueue;
 import model.ACLPoruka;
 import model.AID;
 import model.Agent;
@@ -152,8 +153,14 @@ public class Rest implements RestRemote {
 	@Path("/messages")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void sendMessage(ACLPoruka poruka) {
-		
-		// GRBA OVO IDE PREKO JMS
+		new JMSQueue(poruka);
+	}
+	
+	@GET
+	@Path("/testJMS")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void sendMessagejms() {
+		new JMSQueue(new ACLPoruka());
 	}
 	
 	@GET

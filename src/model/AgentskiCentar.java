@@ -1,6 +1,8 @@
 package model;
 
-public class AgentskiCentar {
+import java.io.Serializable;
+
+public class AgentskiCentar implements Serializable{
 
 	private String alias;
 	
