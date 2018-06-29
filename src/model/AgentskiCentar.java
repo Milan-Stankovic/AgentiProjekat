@@ -8,6 +8,16 @@ public class AgentskiCentar {
 	
 	public AgentskiCentar() {
 	}
+	
+	
+
+	public AgentskiCentar(String alias, String address) {
+		super();
+		this.alias = alias;
+		this.address = address;
+	}
+
+
 
 	public String getAlias() {
 		return alias;

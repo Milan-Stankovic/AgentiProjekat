@@ -28,6 +28,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import model.ACLPoruka;
 import model.AID;
 import model.Agent;
+import model.AgentInterface;
 import model.AgentType;
 import model.AgentskiCentar;
 import model.Baza;
@@ -54,6 +55,35 @@ public class Rest implements RestRemote {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<AgentType> getTipovi() {return baza.getTipovi();}
 	
+	@POST
+	@Path("/agents/classes")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void postTipovi(List<AgentType> noviAgenti) {
+		baza.updateAgentTypes(noviAgenti);
+	}
+	
+	@POST
+	@Path("/agents/running")
+	@Produces(MediaType.APPLICATION_JSON)//TODO
+	public void postAgents(List<Agent> agents) {
+		ArrayList<AgentInterface> ai = (ArrayList<AgentInterface>) getInterfaces((ArrayList) agents);
+		baza.addAllAgents(ai);
+		try {
+			//MISLIM DA JE OVO WEBSOCKET DEO
+		} catch (Exception e) {
+			/*System.out.println("Pukao sendStartedAgents u AC");
+			e.printStackTrace();*/
+		}
+	}
+	
+	
+	private List<AgentInterface> getInterfaces(List<Agent> noviAgenti){
+		ArrayList<AgentInterface> retVal = new ArrayList<AgentInterface>();
+		for (Agent a : noviAgenti) {
+			retVal.add(a);	
+		}
+		return retVal;
+	}
 	
 	@GET
 	@Path("/agents/running")

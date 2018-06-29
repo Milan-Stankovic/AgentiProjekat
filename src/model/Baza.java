@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
@@ -27,6 +28,79 @@ public class Baza {
 	private AgentskiCentar lokalniCentar; // Grba tu mi postavi na pocetku trenutni centar
 	
 	private String masterIp = ""; // Kada budemo testirali 
+	
+	public AgentskiCentar getAgentWithAlias(String alias) {
+		for(AgentskiCentar c:agentskiCentri) {
+			if(c.getAlias().equals(alias)) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	public AgentskiCentar removeAgentWithAlias(AgentskiCentar acentar) {
+		for(AgentskiCentar c:agentskiCentri) {
+			if(c.getAlias().equals(acentar.getAlias())) {
+				agentskiCentri.remove(c);
+				return acentar;
+			}
+		}
+		return null;
+	}
+	
+	public void removeAgentsOnHost(AgentskiCentar acentar) {
+		ArrayList<AID> temp = new ArrayList<AID>();
+
+		for (AID a : agenti.keySet()) {
+			if (a.getHost().getAlias().equals(acentar.getAlias())) {
+				temp.add(a);
+			}
+		}
+
+		for (AID a : temp) {
+			agenti.remove(a);
+		}
+	}
+	
+	public void updateAgentTypes(List<AgentType> noviZaUpdate) {
+		for(AgentType a:noviZaUpdate) {
+			insertAgentType(a);
+		}
+	}
+	
+	public AgentType insertAgentType(AgentType noviZaUpdate) { 
+		for(AgentType tip: tipovi) {
+			if(noviZaUpdate.getName().equals(tip.getName())&&noviZaUpdate.getModule().equals(tip.getModule())) {
+				return null;
+			}
+		}
+		tipovi.add(noviZaUpdate);
+		return noviZaUpdate;
+	}
+	
+	
+	public void updateCenters(List<AgentskiCentar> noviZaUpdate) {
+		for (AgentskiCentar a : agentskiCentri) {
+			insertAgentskiCentar(a);
+		}
+	}
+	
+	public AgentskiCentar insertAgentskiCentar(AgentskiCentar noviZaUpdate) { 
+		for (AgentskiCentar a : agentskiCentri) {
+			if (a.getAlias().equals(noviZaUpdate.getAlias())) {
+				return null;
+			}
+		}
+		agentskiCentri.add(noviZaUpdate);
+		return noviZaUpdate;
+	}
+	
+	public void addAllAgents(List<AgentInterface> agenti) {
+		for(AgentInterface a:agenti) {
+			addAgent((Agent) a);
+		}
+	}
+
 	
 	public ArrayList<AgentType> getTipovi() {
 		return tipovi;
