@@ -156,12 +156,12 @@ public class Rest implements RestRemote {
 		new JMSQueue(poruka);
 	}
 	
-	@GET
+	/*@GET
 	@Path("/testJMS")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void sendMessagejms() {
 		new JMSQueue(new ACLPoruka());
-	}
+	}*/
 	
 	@GET
 	@Path("/message")
