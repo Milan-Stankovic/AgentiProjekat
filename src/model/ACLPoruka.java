@@ -38,6 +38,19 @@ public class ACLPoruka implements Serializable{
 	
 	public ACLPoruka() {
 	}
+	
+	public ACLPoruka(ACLPoruka copy, int reciver) {
+		this.setSender(copy.getSender());
+		this.setReceivers(new AID[] { copy.getReceivers()[reciver] });
+		this.setContent(copy.getContent());
+		this.setContentObj(copy.getContentObj());
+		this.setConversationID(copy.getConversationID());
+		this.setPerformative(copy.getPerformative());
+		this.setProtocol(copy.getProtocol());
+		this.setEncoding(copy.getEncoding());
+		this.setReplyTo(copy.getReplyTo());
+		this.setUserArgs(copy.getUserArgs());;
+	}
 
 	public Performative getPerformative() {
 		return performative;

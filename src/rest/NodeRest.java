@@ -96,8 +96,7 @@ public class NodeRest implements NodeRestRemote{
 			for (AgentskiCentar a : db.getAgentskiCentri()) {
 				if (!a.getAlias().equals(db.getLokalniCentar().getAlias())) {
 					ResteasyClient client = new ResteasyClientBuilder().build();
-					ResteasyWebTarget target = client.target("http://" + a.getAddress()
-							+ ":8096/AgentiProjekat/rest/node/" + alias);
+					ResteasyWebTarget target = client.target("http://" + a.getAddress() + ":8096/AgentiProjekat/rest/node/" + alias);
 					target.request().delete();
 				}
 			}
