@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.ejb.EJB;
 
 import dto.ContractNetDTO;
+import jms.JMSQueue;
 import model.ACLPoruka;
 import model.AID;
 import model.Agent;
@@ -112,7 +113,9 @@ public class Generator extends Agent {
 				
 				System.out.println("DALJE");
 				
-				//GRBA SALJI PORUKE
+				new JMSQueue(next);
+				new JMSQueue(temp);
+				//da li sam trebao obe da saljem?
 		
 			}
 			
@@ -182,6 +185,8 @@ public class Generator extends Agent {
 				
 				
 				//GRBA SALJI PORUKE
+				new JMSQueue(next);
+				new JMSQueue(next2);
 			
 			}
 			
@@ -212,6 +217,7 @@ public class Generator extends Agent {
 							System.out.println("SALJEM DALJE");
 							
 							//GRBA SALJI PORUKU
+							new JMSQueue(next2);
 							next= true; 
 							break;
 							

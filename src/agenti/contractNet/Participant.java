@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
 
+import jms.JMSQueue;
 import model.ACLPoruka;
 import model.AID;
 import model.Agent;
@@ -66,6 +67,8 @@ public class Participant extends Agent {
 			}
 
 			// SALJI PORUKU GRBA
+			new JMSQueue(temp);
+			//evo saljem
 			
 		} else if (poruka.getPerformative().equals(Performative.REJECT)){
 			
@@ -110,7 +113,8 @@ public class Participant extends Agent {
 			}
 			
 			//SALJI PORUKU GRBA
-		
+			new JMSQueue(temp);
+			//evo saljem
 			
 		}
 	}

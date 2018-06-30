@@ -9,6 +9,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateful;
 
 import dto.ContractNetDTO;
+import jms.JMSQueue;
 import model.ACLPoruka;
 import model.AID;
 import model.Agent;
@@ -80,7 +81,8 @@ public class Initiator extends Agent {
 			mapa.put(poruka.getConversationID(), cdto);
 			
 			// GRBA SALJI PORUKU
-			
+			new JMSQueue(temp);
+			//evo saljem
 			
 			
 			ACLPoruka next = new ACLPoruka();
@@ -141,6 +143,8 @@ public class Initiator extends Agent {
 			temp.setReceivers(new AID[] { poruka.getSender() });
 			
 			//GRBA SALJI PORUKU
+			new JMSQueue(temp);
+			//evo saljem
 			
 
 		} else if (poruka.getPerformative().equals(Performative.NEXT)) {
@@ -190,6 +194,8 @@ public class Initiator extends Agent {
 
 				
 				//GRBA SALJI PORUKU
+				new JMSQueue(temp);
+				//evo saljem
 			
 			}
 		} else if (poruka.getPerformative().equals(Performative.DONE)) {
@@ -197,6 +203,8 @@ public class Initiator extends Agent {
 			ACLPoruka temp = new ACLPoruka();
 			temp.setContent("ODRADIO CONTRACTNET USPESNO : " + poruka.getSender().getName());
 			//GRBA SALJI PORUKU
+			new JMSQueue(temp);
+			//evo saljem
 			
 		
 		} else if (poruka.getPerformative().equals(Performative.FAILED)) {
@@ -206,6 +214,8 @@ public class Initiator extends Agent {
 			
 			
 			//GRBA SALJI PORUKU
+			new JMSQueue(aclMsg);
+			//evo saljem
 			
 		}
 	}

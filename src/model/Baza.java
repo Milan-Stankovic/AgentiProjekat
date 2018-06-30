@@ -30,6 +30,16 @@ public class Baza implements Serializable{
 	
 	private String masterIp = ""; // Kada budemo testirali 
 	
+	public ArrayList<AID> getAgentByType(String type) {
+		ArrayList<AID> retVal = new ArrayList<AID>();
+		for (AID a : agenti.keySet()) {
+			if (a.getType().getName().equals(type)) {
+				retVal.add(a);
+			}
+		}
+		return retVal;
+	}
+	
 	@Lock(LockType.READ)
 	public AgentInterface getAgentWithAID(AID aid) {
 		return agenti.get(aid);
