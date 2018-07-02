@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PreDestroy;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
@@ -34,6 +35,11 @@ public class Initiator extends Agent {
 	@Override
 	public void stop() {
 		System.out.println("Initiator iz contract Neta stao");
+	}
+	
+	@PreDestroy
+	public void wtf() {
+		System.out.println("WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
 	}
 
 	@Override
