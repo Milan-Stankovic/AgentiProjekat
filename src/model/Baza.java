@@ -15,6 +15,8 @@ import javax.ejb.Startup;
 import javax.websocket.EncodeException;
 import javax.websocket.Session;
 
+import org.omg.Messaging.SyncScopeHelper;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dto.DolazniWsDTO;
@@ -60,15 +62,19 @@ public class Baza implements Serializable{
 	
 	@Lock(LockType.READ)
 	public AgentInterface getAgentWithAID(AID aid) {
-		//System.out.println(agenti);
+		System.out.println("Trazim agente i na serveru: "+getLokalniCentar().getAddress()+"imam sledece agente: ");
 		
 		for(AID a:agenti.keySet()) {
+			System.out.print(a);
 			if(a.getHost().getAlias().equals(aid.getHost().getAlias())&&
 					a.getHost().getAddress().equals(aid.getHost().getAddress())&&
 					a.getName().equals(aid.getName())&&
 					a.getType().getName().equals(aid.getType().getName())/*&&
 					a.getType().getModule().equals(aid.getType().getModule())*/) {
+				System.out.println("TRUE!!!!!!!");
 				return agenti.get(a);
+			}else {
+				System.out.println();
 			}
 		}
 		return null;
