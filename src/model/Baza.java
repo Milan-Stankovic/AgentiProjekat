@@ -29,7 +29,7 @@ public class Baza implements Serializable{
 	
 	private ArrayList<Session> sesije = new ArrayList<>();
 	
-	private HashMap<AID, Agent> agenti = new HashMap<>();
+	private HashMap<AID, AgentInterface> agenti = new HashMap<>();
 	
 	private ArrayList<AgentskiCentar> agentskiCentri = new ArrayList<>();
 	
@@ -60,7 +60,18 @@ public class Baza implements Serializable{
 	
 	@Lock(LockType.READ)
 	public AgentInterface getAgentWithAID(AID aid) {
-		return agenti.get(aid);
+		//System.out.println(agenti);
+		
+		for(AID a:agenti.keySet()) {
+			if(a.getHost().getAlias().equals(aid.getHost().getAlias())&&
+					a.getHost().getAddress().equals(aid.getHost().getAddress())&&
+					a.getName().equals(aid.getName())&&
+					a.getType().getName().equals(aid.getType().getName())&&
+					a.getType().getModule().equals(aid.getType().getModule())) {
+				return agenti.get(a);
+			}
+		}
+		return null;
 	}
 	
 	public AgentskiCentar getAgentWithAlias(String alias) {
@@ -144,11 +155,11 @@ public class Baza implements Serializable{
 		this.tipovi = tipovi;
 	}
 
-	public HashMap<AID, Agent> getAgenti() {
+	public HashMap<AID, AgentInterface> getAgenti() {
 		return agenti;
 	}
 
-	public void setAgenti(HashMap<AID, Agent> agenti) {
+	public void setAgenti(HashMap<AID, AgentInterface> agenti) {
 		this.agenti = agenti;
 	}
 

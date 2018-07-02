@@ -21,6 +21,7 @@ import jms.JMSQueue;
 import model.ACLPoruka;
 import model.AID;
 import model.Agent;
+import model.AgentInterface;
 import model.Baza;
 import model.Performative;
 
@@ -64,15 +65,15 @@ public class Generator extends Agent {
 			temp.setSender(this.getAid());
 			
 			
-			HashMap<AID, Agent> agenti = baza.getAgenti();
+			HashMap<AID, AgentInterface> agenti = baza.getAgenti();
 			
 			ArrayList<AID> receivers = new ArrayList<>();
 			
-			for(Map.Entry<AID, Agent> entry : agenti.entrySet()) {
+			for(Map.Entry<AID, AgentInterface> entry : agenti.entrySet()) {
 				
 				AID key = entry.getKey();
 			    
-				Agent value = entry.getValue();
+				AgentInterface value = entry.getValue();
 
 				if(key.getType().getName().equals("DISKRIMINATOR"))
 					receivers.add(key);

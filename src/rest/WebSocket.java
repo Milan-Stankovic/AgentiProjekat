@@ -21,6 +21,7 @@ import encoderDecoder.DolazniWsDTODecoder;
 import encoderDecoder.OdlazniWsDTOEncoder;
 import model.ACLPoruka;
 import model.Agent;
+import model.AgentInterface;
 import model.AgentType;
 import model.Baza;
 import model.Performative;
@@ -112,9 +113,9 @@ public class WebSocket implements WebSocketRemote {
 							odlazni3.setTip(TipWs.ACTIVE);
 								
 								
-							ArrayList<Agent> agenti = agentskiCentar.getAgents();
+							ArrayList<AgentInterface> agenti = agentskiCentar.getAgents();
 
-							for(Agent temp : agenti){
+							for(AgentInterface temp : agenti){
 								odlazni3.getObjekti().add(temp.getAid());
 							}		
 								

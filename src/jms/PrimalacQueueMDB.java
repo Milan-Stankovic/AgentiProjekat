@@ -14,6 +14,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
+import agenti.pingPong.Ping;
 import model.ACLPoruka;
 import model.AgentInterface;
 import model.Baza;
@@ -49,7 +50,7 @@ public class PrimalacQueueMDB implements MessageListener {
 						if (agent == null) {
 							System.out.println("Reciever: "+poruka.getReceivers()[i]+" not found");
 						} else {
-							agent.handleMessage(poruka);
+							(agent).handleMessage(poruka);
 						}
 					} else {
 						ACLPoruka novaPoruka = new ACLPoruka(poruka, i);

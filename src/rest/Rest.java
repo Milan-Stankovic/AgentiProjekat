@@ -104,7 +104,7 @@ public class Rest implements RestRemote {
 	@GET
 	@Path("/agents/running")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Agent> getAgents() {return new ArrayList<>(baza.getAgenti().values());}
+	public ArrayList<AgentInterface> getAgents() {return new ArrayList<>(baza.getAgenti().values());}
 	
 	@PUT
 	@Path("/agents/running/{type}/{name}")

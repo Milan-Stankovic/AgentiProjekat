@@ -52,15 +52,15 @@ public class Initiator extends Agent {
 			temp.setSender(this.getAid());
 			
 			
-			HashMap<AID, Agent> agenti = baza.getAgenti();
+			HashMap<AID, AgentInterface> agenti = baza.getAgenti();
 			
 			ArrayList<AID> receivers = new ArrayList<>();
 			
-			for(Map.Entry<AID, Agent> entry : agenti.entrySet()) {
+			for(Map.Entry<AID, AgentInterface> entry : agenti.entrySet()) {
 				
 				AID key = entry.getKey();
 			    
-				Agent value = entry.getValue();
+				AgentInterface value = entry.getValue();
 
 				if(key.getType().getName().equals("PARTICIPANT"))
 					receivers.add(key);
