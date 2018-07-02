@@ -114,7 +114,7 @@ public class Baza implements Serializable{
 	
 	
 	public void updateCenters(List<AgentskiCentar> noviZaUpdate) {
-		for (AgentskiCentar a : agentskiCentri) {
+		for (AgentskiCentar a : noviZaUpdate) {
 			insertAgentskiCentar(a);
 		}
 	}
