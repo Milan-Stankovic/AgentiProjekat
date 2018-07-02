@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
+import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import jms.JMSQueue;
 import model.ACLPoruka;
@@ -28,6 +29,7 @@ public class Ping extends Agent{
 
 	@Override
 	public void handleMessage(ACLPoruka poruka) {
+		System.out.println("Ping has rcived message, well see what it does. "+poruka);
 		if(poruka.getPerformative().equals(Performative.REQUEST)) {
 			ACLPoruka aclPoruka = new ACLPoruka();
 			aclPoruka.setSender(this.getAid());

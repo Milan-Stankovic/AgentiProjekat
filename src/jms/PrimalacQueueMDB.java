@@ -53,6 +53,7 @@ public class PrimalacQueueMDB implements MessageListener {
 						if (agent == null) {
 							System.out.println("Reciever: "+poruka.getReceivers()[i]+" not found");
 						} else {
+							System.out.println("RADIM HANDLE ZA MESSAGE: "+poruka.getPerformative());
 							(agent).handleMessage(poruka);
 						}
 					} else {
