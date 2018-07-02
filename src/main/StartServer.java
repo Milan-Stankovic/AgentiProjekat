@@ -82,7 +82,7 @@ public class StartServer {
 				db.addAgent(ping);
 				*/
 				Pong pong = new Pong();
-				pong.setAid(new AID("Pong", db.getLokalniCentar(), tip));
+				pong.setAid(new AID("Pong", db.getLokalniCentar(), tip1));
 				db.addAgent(pong);
 				
 				System.out.println("Master node initiated. Prepare to be amazed.");
