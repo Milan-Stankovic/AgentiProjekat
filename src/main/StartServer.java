@@ -77,10 +77,10 @@ public class StartServer {
 				tipovi.add(tip1);
 				db.setTipovi(tipovi);
 				
-				Ping ping = new Ping();
+				/*Ping ping = new Ping();
 				ping.setAid(new AID("Ping", db.getLokalniCentar(), tip));
 				db.addAgent(ping);
-				
+				*/
 				Pong pong = new Pong();
 				pong.setAid(new AID("Pong", db.getLokalniCentar(), tip));
 				db.addAgent(pong);

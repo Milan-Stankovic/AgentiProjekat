@@ -116,10 +116,9 @@ public class Rest implements RestRemote {
 			
 			//Object obj223 = context.lookup("java:module/Pong"); // Totova madjija mada on nesto kao radi preko interfejsa
 			
-			//AgentInterface agent = (AgentInterface) context.lookup("java:module/Pong"); // Totova madjija mada on nesto kao radi preko interfejsa
-			//agent.init(new AID(name, baza.getLokalniCentar(), new AgentType(type, null)));
-			Agent agent = new Agent();
+			AgentInterface agent = (AgentInterface) context.lookup("java:module/Pong"); // Totova madjija mada on nesto kao radi preko interfejsa
 			agent.init(new AID(name, baza.getLokalniCentar(), new AgentType(type, null)));
+
 			
 			baza.addAgent(agent);
 			context.close();
@@ -137,7 +136,7 @@ public class Rest implements RestRemote {
 					ResteasyWebTarget target = client
 							.target("http://" + tempA.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/running");
 					
-					ArrayList<Agent> lista = new ArrayList<Agent>();
+					ArrayList<AgentInterface> lista = new ArrayList<AgentInterface>();
 					lista.add(agent);
 					
 					target.request(MediaType.APPLICATION_JSON).post(Entity.entity(lista,MediaType.APPLICATION_JSON));
