@@ -95,7 +95,7 @@ public class Initiator extends Agent {
 			System.out.println("DALJE");
 			
 			//GRBA SALJI PORUKU
-			new JMSQueue(next, kraj);
+			//new JMSQueue(next, kraj);
 
 		} else if (poruka.getPerformative().equals(Performative.REFUSE)) {
 			
