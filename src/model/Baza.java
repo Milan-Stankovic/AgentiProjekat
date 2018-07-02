@@ -196,7 +196,7 @@ public class Baza implements Serializable{
 	}
 
 	@Lock(LockType.WRITE)
-	public Boolean addAgent(Agent agent) {
+	public Boolean addAgent(AgentInterface agent) {
 
 		AID aid = agent.getAid();
 		for (AID a : agenti.keySet()) {
