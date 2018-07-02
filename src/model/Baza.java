@@ -45,11 +45,13 @@ public class Baza implements Serializable{
 	private String masterIp = ""; // Kada budemo testirali 
 
 	public void sendActiveToSocket() throws IOException, EncodeException{
+		System.out.println("WS DODAJEM");
 		// napravi listu aid-a umesto remote interfejsa
 		DolazniWsDTO d = new DolazniWsDTO();
 		d.setTip(TipWs.ACTIVE);
 		d.setObject(agenti.values());
 		for(Session s:ws.getLokalneSesije()) {
+			System.out.println("Za lokalnu sesiju: "+s);
 			ws.message(s, d);
 		}
 }
