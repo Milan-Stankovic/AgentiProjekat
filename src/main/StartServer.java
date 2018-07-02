@@ -57,7 +57,7 @@ public class StartServer {
 			
 			java.nio.file.Path p = Paths.get(".").toAbsolutePath().normalize();
 			
-			System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(p.toString() + "\\error.txt")), true));
+			//System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(p.toString() + "\\error.txt")), true));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

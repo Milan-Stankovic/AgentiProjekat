@@ -93,6 +93,7 @@ public class Initiator extends Agent {
 			
 			final ACLPoruka next = new ACLPoruka();
 			next.setSender(this.aid);
+			next.setConversationID(poruka.getConversationID());
 			next.setReceivers(new AID[] { this.aid });
 			next.setPerformative(Performative.NEXT);
 
@@ -181,6 +182,15 @@ public class Initiator extends Agent {
 			
 			int min =101;
 			AID minAID = null;
+			
+			System.out.println("Poruka je : " + poruka);
+			
+			System.out.println("Convo id je : " + poruka.getConversationID());
+			
+		
+			
+			
+			
 			
 			HashMap<AID, Integer> ponude = mapa.get(poruka.getConversationID()).getPonude();
 			
