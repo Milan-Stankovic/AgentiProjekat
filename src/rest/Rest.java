@@ -74,6 +74,8 @@ public class Rest implements RestRemote {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void postAgents(List<Agent> agents) {
+		System.out.println("USAO SAM !");
+		
 		ArrayList<AgentInterface> ai = (ArrayList<AgentInterface>) getInterfaces((ArrayList) agents);
 		baza.addAllAgents(ai);
 		try {
@@ -107,8 +109,7 @@ public class Rest implements RestRemote {
 	@PUT
 	@Path("/agents/running/{type}/{name}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.TEXT_PLAIN)
-	public void startAgent(@PathParam("type") String type, @PathParam("name") String name, String tip ) {
+	public void startAgent(@PathParam("type") String type, @PathParam("name") String name) {
 		
 		try {
 			Context context = new InitialContext();
@@ -129,8 +130,11 @@ public class Rest implements RestRemote {
 				ResteasyClient client = new ResteasyClientBuilder().build();
 				if (!tempA.getAddress().equals(baza.getLokalniCentar().getAddress())) {
 			
+					
+					System.out.println("http://" + tempA.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/running");
+					
 					ResteasyWebTarget target = client
-							.target("http://" + tempA.getAddress() + ":8080/agentskiCentar/agents/running");
+							.target("http://" + tempA.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/running");
 					
 					ArrayList<Agent> lista = new ArrayList<Agent>();
 					lista.add(agent);
@@ -162,7 +166,7 @@ public class Rest implements RestRemote {
 			} else {
 				ResteasyClient client = new ResteasyClientBuilder().build();
 				ResteasyWebTarget target = client.target("http://" + ac.getAddress()
-						+ ":8080/agentskiCentar/agents/running/remove/" + aid + "/" + hostName);
+						+ ":8096/AgentiProjekat/rest/agentskiCentar/agents/running/remove/" + aid + "/" + hostName);
 				target.request().delete();
 			}
 		}
