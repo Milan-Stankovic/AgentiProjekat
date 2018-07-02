@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
+import javax.ejb.EJB;
 import javax.ejb.Lock;
 import javax.ejb.LockType;
 import javax.ejb.Singleton;
@@ -21,15 +22,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dto.DolazniWsDTO;
 import dto.OdlazniWsDTO;
+import rest.WebSocket;
 
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 @Startup
 @Singleton
 public class Baza implements Serializable{
 	
+	@EJB
+	private WebSocket ws;
+	
 	private ArrayList<AgentType> tipovi = new ArrayList<>();
 	
-	private ArrayList<Session> sesije = new ArrayList<>();
+	//private ArrayList<Session> sesije = new ArrayList<>();
 	
 	private HashMap<AID, AgentInterface> agenti = new HashMap<>();
 	
@@ -43,11 +48,10 @@ public class Baza implements Serializable{
 		// napravi listu aid-a umesto remote interfejsa
 		DolazniWsDTO d = new DolazniWsDTO();
 		d.setTip(TipWs.ACTIVE);
-
-		// prodji kroz sve sesije i posalji listu agenata
-		for (Session s : sesije) {
-			s.getBasicRemote().sendObject(d);
-		}	
+		d.setObject(agenti.values());
+		for(Session s:ws.getLokalneSesije()) {
+			ws.message(s, d);
+		}
 }
 	
 	public ArrayList<AID> getAgentByType(String type) {
@@ -194,13 +198,13 @@ public class Baza implements Serializable{
 		this.masterIp = masterIp;
 	}
 	
-	public ArrayList<Session> getSesije() {
+	/*public ArrayList<Session> getSesije() {
 		return sesije;
 	}
 
 	public void setSesije(ArrayList<Session> sesije) {
 		this.sesije = sesije;
-	}
+	}*/
 
 	@Lock(LockType.WRITE)
 	public Boolean addAgent(AgentInterface agent) {

@@ -173,19 +173,31 @@ public class WebSocket implements WebSocketRemote {
 			
 			System.out.println("NOVA SESIJA");
 			lokalneSesije.add(session);
-			baza.getSesije().add(session);
+			//baza.getSesije().add(session);
 		}
 	}
 	
 	@OnClose
 	public void close(Session session) {
 		lokalneSesije.remove(session);
-		baza.getSesije().remove(session);
+		//baza.getSesije().remove(session);
 	}
 	
 	@OnError
 	public void error(Session session, Throwable t) {
 		System.out.println("PRSAO");
 	}
+
+
+	public List<Session> getLokalneSesije() {
+		return lokalneSesije;
+	}
+
+
+	public void setLokalneSesije(List<Session> lokalneSesije) {
+		this.lokalneSesije = lokalneSesije;
+	}
+	
+	
 	
 }

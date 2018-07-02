@@ -168,7 +168,7 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 					break;
 				case 'ACTIVE':	
 					
-					$scope.activeAgents = odlazni.objekti;
+					$scope.activeAgents = odlazni.object;
 					
 					refresh();
 					
