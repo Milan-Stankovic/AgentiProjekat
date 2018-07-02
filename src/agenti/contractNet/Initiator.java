@@ -151,6 +151,8 @@ public class Initiator extends Agent {
 		} else if (poruka.getPerformative().equals(Performative.NEXT)) {
 
 			
+			System.out.println("USAO JE U NEXT");
+			
 			int min =101;
 			AID minAID = null;
 			
@@ -177,6 +179,8 @@ public class Initiator extends Agent {
 			temp.setConversationID(poruka.getConversationID());
 
 			for(Map.Entry<AID, Integer> entry : ponude.entrySet()) {
+				
+				System.out.println("UPAO JE U FOR");
 
 				AID key = entry.getKey();
 				
