@@ -62,7 +62,7 @@ public class Initiator extends Agent {
 			    
 				AgentInterface value = entry.getValue();
 
-				if(key.getType().getName().equals("PARTICIPANT"))
+				if(key.getType().getName().equals("Participant"))
 					receivers.add(key);
 			 
 			}
