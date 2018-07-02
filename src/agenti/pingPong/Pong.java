@@ -23,6 +23,7 @@ public class Pong extends Agent{
 
 	@Override
 	public void handleMessage(ACLPoruka poruka) {
+		System.out.println("Pong has rcived message, well see what it does. "+poruka);
 		if(poruka.getPerformative().equals(Performative.REQUEST)) {
 			ACLPoruka aclPoruka = new ACLPoruka();
 			aclPoruka.setSender(this.getAid());
