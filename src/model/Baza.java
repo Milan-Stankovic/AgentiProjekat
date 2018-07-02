@@ -63,7 +63,7 @@ public class Baza implements Serializable{
 	@Lock(LockType.READ)
 	public AgentInterface getAgentWithAID(AID aid) {
 		System.out.println("Trazim agente i na serveru: "+getLokalniCentar().getAddress()+"imam sledece agente: ");
-		
+		System.out.println("Moram da poredim sa ovim aidom : " +aid);
 		for(AID a:agenti.keySet()) {
 			System.out.print(a);
 			if(a.getHost().getAlias().equals(aid.getHost().getAlias())&&
