@@ -1,8 +1,12 @@
 package main;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.URL;
@@ -19,7 +23,6 @@ import javax.ejb.Schedule;
 import javax.ejb.Schedules;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.swing.plaf.synth.SynthSpinnerUI;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -29,10 +32,6 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
-import agenti.pingPong.Ping;
-import agenti.pingPong.Pong;
-import model.AID;
-import model.Agent;
 import model.AgentType;
 import model.AgentskiCentar;
 import model.Baza;
@@ -54,6 +53,16 @@ public class StartServer {
 	
 	@PostConstruct
 	public void handshake() {
+		try {
+			
+			java.nio.file.Path p = Paths.get(".").toAbsolutePath().normalize();
+			
+			System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(p.toString() + "\\error.txt")), true));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		//ucitavanje IP i kreiranje agentskog centra
 		if(loadIp()) {
 			db.setMasterIp(masterIp);
