@@ -26,9 +26,9 @@ public class OdlazniWsDTODecoder implements Decoder.Text<OdlazniWsDTO> {
 	@Override
 	public OdlazniWsDTO decode(String json) throws DecodeException {
 		 Gson gson = new Gson();
-		 OdlazniWsDTO dolazni = gson.fromJson(json, OdlazniWsDTO.class);   
+		 OdlazniWsDTO odlazni = gson.fromJson(json, OdlazniWsDTO.class);   
 		
-		return dolazni;
+		return odlazni;
 	}
 
 	@Override

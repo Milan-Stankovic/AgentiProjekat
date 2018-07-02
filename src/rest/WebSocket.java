@@ -53,6 +53,10 @@ public class WebSocket implements WebSocketRemote {
 	@OnMessage
 	public void message(Session session, DolazniWsDTO ws) {
 		
+		System.out.println("EVO ME U WEBSOCKETU");
+		System.out.println(ws.getTipAgenta());
+		System.out.println(ws);
+		
 		if (session.isOpen()) {
 			
 			for (Session s : lokalneSesije) {
@@ -109,7 +113,9 @@ public class WebSocket implements WebSocketRemote {
 							break;
 							
 						case ACTIVE: 
-								
+								 
+							System.out.println("UPAO U AKTIVNI WS");
+							
 							OdlazniWsDTO odlazni3 = new OdlazniWsDTO();
 								
 							odlazni3.setTip(TipWs.ACTIVE);
@@ -118,6 +124,7 @@ public class WebSocket implements WebSocketRemote {
 							ArrayList<AgentInterface> agenti = agentskiCentar.getAgents();
 
 							for(AgentInterface temp : agenti){
+								System.out.println("Agenti su : " + temp);
 								odlazni3.getObjekti().add(temp.getAid());
 							}		
 								

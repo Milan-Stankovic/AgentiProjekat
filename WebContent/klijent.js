@@ -146,6 +146,10 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 				
 				var odlazni = msg.data;
 				
+				console.log(msg);
+				
+				console.log(odlazni);
+				
 				switch(odlazni.tip) {
 				
 				case 'PERFORMATIVE':
