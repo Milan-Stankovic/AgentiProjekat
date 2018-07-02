@@ -106,11 +106,18 @@ public class Rest implements RestRemote {
 	
 	@PUT
 	@Path("/agents/running/{type}/{name}")
-	public void startAgent(@PathParam("type") String type, @PathParam("name") String name) {
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.TEXT_PLAIN)
+	public void startAgent(@PathParam("type") String type, @PathParam("name") String name, String tip ) {
 		
 		try {
 			Context context = new InitialContext();
-			Agent agent = (Agent) context.lookup("java:module/" + type); // Totova madjija mada on nesto kao radi preko interfejsa
+			
+			//Object obj223 = context.lookup("java:module/Pong"); // Totova madjija mada on nesto kao radi preko interfejsa
+			
+			//AgentInterface agent = (AgentInterface) context.lookup("java:module/Pong"); // Totova madjija mada on nesto kao radi preko interfejsa
+			//agent.init(new AID(name, baza.getLokalniCentar(), new AgentType(type, null)));
+			Agent agent = new Agent();
 			agent.init(new AID(name, baza.getLokalniCentar(), new AgentType(type, null)));
 			
 			baza.addAgent(agent);

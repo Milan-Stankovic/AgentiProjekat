@@ -247,6 +247,8 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
     	
     	var name = tip.agentName;
     	
+    	var obj = tip.module;
+    	
     	if ($scope.aktivanWs) {	
     		
     		aktiviraj(tip.name, name);
@@ -256,7 +258,8 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
     	} else {
 	    	$http({
 			  method: 'PUT',
-			  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/agents/running/'+tip.name+'/'+name
+			  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/agents/running/'+tip.name+'/'+name, 
+			  data : obj
 			}).then(function successCallback(response) {
 
 				$http({
