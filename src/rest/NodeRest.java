@@ -87,6 +87,8 @@ public class NodeRest implements NodeRestRemote{
 				response = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(a, MediaType.APPLICATION_JSON));
 				System.out.println("Response: "+response.getStatus()+response.getEntity());
 				
+				
+				System.out.println("Cvorove koje te obavestavam da imaju: "+db.getAgentskiCentri());
 				return db.getAgentskiCentri();
 			}else {
 				db.insertAgentskiCentar(novCenatar);
