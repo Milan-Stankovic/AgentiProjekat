@@ -72,6 +72,7 @@ public class Rest implements RestRemote {
 	@POST
 	@Path("/agents/running")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public void postAgents(List<Agent> agents) {
 		ArrayList<AgentInterface> ai = (ArrayList<AgentInterface>) getInterfaces((ArrayList) agents);
 		baza.addAllAgents(ai);
