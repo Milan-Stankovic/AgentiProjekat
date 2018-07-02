@@ -80,8 +80,10 @@ public class NodeRest implements NodeRestRemote{
 				}
 				
 				System.out.println("Saljem na novi node agente koji radi");
+				
 				target = client.target("http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/running");
-				response = target.request().post(Entity.entity(db.getAgenti(), MediaType.APPLICATION_JSON));
+				System.out.println("Target: "+target);
+				response = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(db.getAgenti(), MediaType.APPLICATION_JSON));
 				
 				return db.getAgentskiCentri();
 			}else {
