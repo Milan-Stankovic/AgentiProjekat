@@ -47,14 +47,17 @@ public class NodeRest implements NodeRestRemote{
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public List<AgentskiCentar> registerNode(AgentskiCentar novCenatar) {
+		System.out.println("Poceta registracija na Master node");
 		try {
 			if(db.getMasterIp().equals(db.getLokalniCentar().getAddress())) {
+				System.out.println("Saljem zahtev da se na novi cvor obavesti o tipovima agenata");
 				ResteasyClient client = new ResteasyClientBuilder().build();
 				ResteasyWebTarget target = client.target("http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/classes");
 				Response response = target.request(MediaType.APPLICATION_JSON).get();
 				ArrayList<AgentType> podrzavaniAgenti = (ArrayList<AgentType>) response.readEntity(new GenericType<List<AgentType>>() {});
 				db.updateAgentTypes(podrzavaniAgenti);
 				
+				System.out.println("Saljem novi node na ostale ne master nodeove");
 				for (AgentskiCentar nodeovi : db.getAgentskiCentri()) {
 					if (!nodeovi.getAddress().equals(db.getMasterIp())) {
 						target = client.target("http://" + nodeovi.getAddress() + ":8096/AgentiProjekat/rest/node");
@@ -63,6 +66,7 @@ public class NodeRest implements NodeRestRemote{
 				}
 				db.insertAgentskiCentar(novCenatar);
 
+				System.out.println("Saljem tipove agenata na ostale cvorove");
 				for (AgentskiCentar nodeovi : db.getAgentskiCentri()) {
 					if (!nodeovi.getAddress().equals(db.getMasterIp())) {
 						target = client.target("http://" + nodeovi.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/classes");
@@ -70,6 +74,7 @@ public class NodeRest implements NodeRestRemote{
 					}
 				}
 				
+				System.out.println("Saljem na novi node agente koji radi");
 				target = client.target("http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/running");
 				response = target.request().post(Entity.entity(db.getAgenti(), MediaType.APPLICATION_JSON));
 				
