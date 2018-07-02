@@ -105,9 +105,10 @@ public class StartServer {
 							if (!tryHandshake()){
 								deleteNode(db.getLokalniCentar());
 							}
-						}
+						}else {
 						
-						System.out.println("Thanks master. I'm alive.");
+							System.out.println("Thanks master. I'm alive.");
+						}
 		            }
 		        };
 		        System.out.println("Starting new thread");

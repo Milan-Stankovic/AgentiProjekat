@@ -49,7 +49,7 @@ public class Baza implements Serializable{
 		// napravi listu aid-a umesto remote interfejsa
 		DolazniWsDTO d = new DolazniWsDTO();
 		d.setTip(TipWs.ACTIVE);
-		d.setObject(agenti.values());
+		
 		for(Session s: sesije) {
 			System.out.println("Za lokalnu sesiju: "+s);
 			ws.message(s, d);
