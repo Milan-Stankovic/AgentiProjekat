@@ -95,7 +95,7 @@ public class Initiator extends Agent {
 			System.out.println("DALJE");
 			
 			//GRBA SALJI PORUKU
-			new JMSQueue(next, kraj);
+			new JMSQueue(next);
 
 		} else if (poruka.getPerformative().equals(Performative.REFUSE)) {
 			
@@ -144,7 +144,7 @@ public class Initiator extends Agent {
 			temp.setReceivers(new AID[] { poruka.getSender() });
 			
 			//GRBA SALJI PORUKU
-			new JMSQueue(temp);
+			//new JMSQueue(temp);
 			//evo saljem
 			
 

@@ -1,11 +1,10 @@
 package agenti.contractNet;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
+import javax.inject.Inject;
 
 import jms.JMSQueue;
 import model.ACLPoruka;
@@ -20,7 +19,7 @@ import model.Performative;
 public class Participant extends Agent {
 	
 	
-	@EJB
+	@Inject
 	Baza baza;
 	
 	@Override 
