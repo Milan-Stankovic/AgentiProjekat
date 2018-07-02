@@ -34,7 +34,7 @@ public class Baza implements Serializable{
 	
 	private ArrayList<AgentType> tipovi = new ArrayList<>();
 	
-	//private ArrayList<Session> sesije = new ArrayList<>();
+	private ArrayList<Session> sesije = new ArrayList<>();
 	
 	private HashMap<AID, AgentInterface> agenti = new HashMap<>();
 	
@@ -50,7 +50,7 @@ public class Baza implements Serializable{
 		DolazniWsDTO d = new DolazniWsDTO();
 		d.setTip(TipWs.ACTIVE);
 		d.setObject(agenti.values());
-		for(Session s:ws.getLokalneSesije()) {
+		for(Session s: sesije) {
 			System.out.println("Za lokalnu sesiju: "+s);
 			ws.message(s, d);
 		}
@@ -200,13 +200,13 @@ public class Baza implements Serializable{
 		this.masterIp = masterIp;
 	}
 	
-	/*public ArrayList<Session> getSesije() {
+	public ArrayList<Session> getSesije() {
 		return sesije;
 	}
 
 	public void setSesije(ArrayList<Session> sesije) {
 		this.sesije = sesije;
-	}*/
+	}
 
 	@Lock(LockType.WRITE)
 	public Boolean addAgent(AgentInterface agent) {

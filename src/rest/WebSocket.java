@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
-import javax.ejb.Singleton;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
 import javax.websocket.EncodeException;
@@ -31,7 +30,7 @@ import model.Performative;
 import model.TipWs;
 
 @LocalBean
-@Singleton
+@Stateful
 @ServerEndpoint(
 		
 	    value = "/ws",
@@ -171,34 +170,21 @@ public class WebSocket implements WebSocketRemote {
 	@OnOpen
 	public void open(Session session) {
 		if (!lokalneSesije.contains(session)) {
-			
 			System.out.println("NOVA SESIJA");
 			lokalneSesije.add(session);
-			//baza.getSesije().add(session);
+			baza.getSesije().add(session);
 		}
 	}
 	
 	@OnClose
 	public void close(Session session) {
 		lokalneSesije.remove(session);
-		//baza.getSesije().remove(session);
+		baza.getSesije().remove(session);
 	}
 	
 	@OnError
 	public void error(Session session, Throwable t) {
 		System.out.println("PRSAO");
 	}
-
-
-	public List<Session> getLokalneSesije() {
-		return lokalneSesije;
-	}
-
-
-	public void setLokalneSesije(List<Session> lokalneSesije) {
-		this.lokalneSesije = lokalneSesije;
-	}
-	
-	
 	
 }
