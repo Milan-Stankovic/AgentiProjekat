@@ -144,10 +144,23 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 				
 				console.log("DOBIO PORUKU");
 				
-				var odlazni = msg.data;
+				var odlazni = JSON.parse(msg.data);
+				
 				
 				console.log(msg);
+				console.log("EVO GA KAO JSON");
+				console.log(JSON.stringify(odlazni));
 				
+				
+				console.log("EVO GA KAO OBJECT KEYS");
+				console.log(Object.keys(odlazni));
+				
+				console.log("IME : " + odlazni.ime);
+				
+				console.log("TIP :");
+				console.log(odlazni.tip);
+
+				console.log(odlazni.objekti);
 				console.log(odlazni);
 				
 				switch(odlazni.tip) {
@@ -166,9 +179,28 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 					refresh();
 					
 					break;
-				case 'ACTIVE':	
+				case 'ACTIVE':
 					
-					$scope.activeAgents = odlazni.object;
+					console.log("ODLAZNI OBJEKTI U ACTIVE-U : ");
+					console.log(odlazni.objekti);
+					
+					
+					
+					for(var i =0; i<odlazni.objekti.length; i++ ){
+						var temp = {};
+						temp =odlazni.objekti[i];
+						odlazni.objekti[i].aid=temp;
+					}
+					
+					$scope.activeAgents = odlazni.objekti;
+					
+					
+					
+					// $scope.$apply($scope.activeAgents);
+					
+					if(!$scope.$$phase) {
+		            	  $scope.$apply($scope.activeAgents);
+		            	 }
 					
 					refresh();
 					
@@ -466,6 +498,10 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 			}
 		}
 		
+		
+      	  $scope.$apply($scope.receivers);
+      	
+		
 		refresh();
 	}
 	var setSender = function(data) {
@@ -489,6 +525,10 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 				$scope.selectedSender = undefined;
 			}
 		}
+		
+		
+	      	  $scope.$apply($scope.sender);
+	      
 		
 		refresh();
 	}

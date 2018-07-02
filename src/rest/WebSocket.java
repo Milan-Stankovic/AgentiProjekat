@@ -54,14 +54,15 @@ public class WebSocket implements WebSocketRemote {
 	public void message(Session session, DolazniWsDTO ws) {
 		
 		System.out.println("EVO ME U WEBSOCKETU");
-		System.out.println(ws.getTipAgenta());
+		System.out.println(ws.getTip());
 		System.out.println(ws);
 		
 		if (session.isOpen()) {
+			Session s = session;
 			
-			for (Session s : lokalneSesije) {
+		//	for (Session s : lokalneSesije) {
 					
-				if (s.getId().equals(session.getId())) {
+			//	if (s.getId().equals(session.getId())) {
 						
 					switch (ws.getTip()) {
 						case PERFORMATIVE: 
@@ -119,6 +120,7 @@ public class WebSocket implements WebSocketRemote {
 							OdlazniWsDTO odlazni3 = new OdlazniWsDTO();
 								
 							odlazni3.setTip(TipWs.ACTIVE);
+							odlazni3.setIme("CHOO CHOO");
 								
 								
 							ArrayList<AgentInterface> agenti = agentskiCentar.getAgents();
@@ -162,8 +164,8 @@ public class WebSocket implements WebSocketRemote {
 		                    break;
 					}
 				}
-			}
-		}
+			//}
+		//}
 	} 
 			
 
