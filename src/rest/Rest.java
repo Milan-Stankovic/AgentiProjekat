@@ -87,6 +87,12 @@ public class Rest implements RestRemote {
 	}
 	
 	@GET
+	@Path("/agents/types")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<AgentType> getAgents2() {return baza.getTipovi();}
+	
+	
+	@GET
 	@Path("/agents/running")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Agent> getAgents() {return new ArrayList<>(baza.getAgenti().values());}

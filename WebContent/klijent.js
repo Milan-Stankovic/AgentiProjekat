@@ -31,7 +31,7 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 			
 			$http({
 			  method: 'GET',
-			  url: 'http://localhost:8096/rest/agentskiCentar/message',
+			  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/message',
 			}).then(function successCallback(response) {
 				
 				$scope.performatives = response.data;
@@ -64,7 +64,7 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 			
 			$http({
 			  method: 'GET',
-			  url: 'http://localhost:8096/rest/agentskiCentar/agents/running'
+			  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/agents/running'
 			}).then(function successCallback(response) {
 				
 				$scope.activeAgents = response.data;
@@ -99,7 +99,7 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 			
 			$http({
 			  method: 'GET',
-			  url: 'http://localhost:8096/rest/agentskiCentar/agents/types'
+			  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/agents/types'
 			}).then(function successCallback(response) {
 				
 				$scope.tipovi = response.data;
@@ -116,7 +116,7 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 	
 	// inicijalizuj podatke i startuj socket ako moze
 	if ("WebSocket" in window) {
-		var host = "ws://localhost:8096/ws";
+		var host = "ws://localhost:8096/AgentiProjekat/ws";
 		try {
 			
 			$scope.ws = new WebSocket(host);
@@ -255,12 +255,12 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
     	} else {
 	    	$http({
 			  method: 'PUT',
-			  url: 'http://localhost:8096/rest/agentskiCentar/agents/running/'+tip.name+'/'+name
+			  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/agents/running/'+tip.name+'/'+name
 			}).then(function successCallback(response) {
 
 				$http({
 					  method: 'GET',
-					  url: 'http://localhost:8096/rest/agentskiCentar/agents/running'
+					  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/agents/running'
 					}).then(function successCallback(response) {
 						
 						
@@ -297,12 +297,12 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
     		
     		$http({
   	  		  method: 'DELETE',
-  	  		  url: 'http://localhost:8096/rest/agentskiCentar/agents/running/'+agent.id.name+'/'+agent.id.host.alias
+  	  		  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/agents/running/'+agent.id.name+'/'+agent.id.host.alias
   	  		}).then(function successCallback(response) {
 
   	  			$http({
   					  method: 'GET',
-  					  url: 'http://localhost:8096/rest/agentskiCentar/agents/running'
+  					  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/agents/running'
   					}).then(function successCallback(response) {
   						
   						$scope.activeAgents = response.data;
@@ -349,7 +349,7 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
     		
 			$http({
 			  method: 'POST',
-			  url: 'http://localhost:8096/rest/agentskiCentar/messages',
+			  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/messages',
 			  data: ACLMessage
 			}).then(function successCallback(response) {
 				
