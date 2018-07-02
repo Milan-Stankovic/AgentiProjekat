@@ -100,6 +100,7 @@ public class Baza implements Serializable{
 	}
 	
 	public void removeAgentsOnHost(AgentskiCentar acentar) {
+		System.out.println("REMOVE--------------------------!!!!!!!!!!!!!!!!!!!!!!!!!");
 		ArrayList<AID> temp = new ArrayList<AID>();
 
 		for (AID a : agenti.keySet()) {
