@@ -49,7 +49,7 @@ public class PrimalacQueueMDB implements MessageListener {
 					if (db.getLokalniCentar().getAddress().equals(poruka.getReceivers()[i].getHost().getAddress())) {
 						System.out.println("AGENT JE NA OVOM SERVERU!!!!");
 						AgentInterface agent = db.getAgentWithAID(poruka.getReceivers()[i]);
-						System.out.println("Nasao sam od agent da ga izvrsim: "+agent);
+						System.out.println("Klasa od nadjenog je: "+agent.getClass()+"---Nasao sam od agent da ga izvrsim: "+agent);
 						if (agent == null) {
 							System.out.println("Reciever: "+poruka.getReceivers()[i]+" not found");
 						} else {
