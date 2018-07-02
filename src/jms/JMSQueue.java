@@ -61,14 +61,15 @@ public class JMSQueue {
 			Connection connection = cf.createConnection();//"guest", "guestguest");
 			final Session session = connection.createSession(false,
 					Session.AUTO_ACKNOWLEDGE);
-			
+
 			connection.start();
 
 		    ObjectMessage msg = session.createObjectMessage(aclMessage);
 		    long sent = System.currentTimeMillis();
 		    msg.setLongProperty("sent", sent);
-
+		    
 			MessageProducer producer = session.createProducer(queue);
+
 			log.info("Saljem poruku na queue: " + msg.getObject());
 			producer.setDeliveryDelay(delay);
 			producer.send(msg);
@@ -80,6 +81,7 @@ public class JMSQueue {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		
 }
 
 }

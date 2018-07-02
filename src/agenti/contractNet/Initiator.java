@@ -26,7 +26,7 @@ public class Initiator extends Agent {
 	
 	private long pocetak;
 	
-	private long kraj = 10000;
+	private long kraj = 3000;
 	
 	@EJB
 	Baza baza;
