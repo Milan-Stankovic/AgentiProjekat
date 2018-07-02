@@ -23,12 +23,12 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 				"tipAgenta" : ""
 			}
 			
-			
+			console.log("Getuje performative preko WS");
 			$scope.ws.send(dolazniDTO);
 		
 
 		} else {
-			
+			console.log("Getuje performative preko RESTA");
 			$http({
 			  method: 'GET',
 			  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/message',
@@ -51,6 +51,8 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 		
 		if ($scope.aktivanWs) {
 			
+			console.log("Getuje aktivne preko WS");
+			
 			var dolazniDTO = {
 					"tip": "TYPE",
 					"object" : null,
@@ -62,6 +64,8 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 				$scope.ws.send(dolazniDTO);
 		} else {
 			
+			console.log("Getuje aktivne preko RESTA");
+			
 			$http({
 			  method: 'GET',
 			  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/agents/running'
@@ -70,6 +74,8 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 				$scope.activeAgents = response.data;
 				refresh();
 				
+				
+				console.log("EVO DOBIO JE NESTO U RESTU : " + response.data);
 				setSender(response.data);
 				
 				setReceivers(response.data);
@@ -344,17 +350,19 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 			"replyWith":  replyWith,
 			"replayBy":  replyBy
 		}
+		
+		console.log(poruka);
 
 		if ($scope.aktivanWs) {
 			
-    		sendACLMessage(ACLMessage);	  
+    		sendACLMessage(poruka);	  
     		
     	} else {
     		
 			$http({
 			  method: 'POST',
 			  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/messages',
-			  data: ACLMessage
+			  data: poruka
 			}).then(function successCallback(response) {
 				
 				console.log("POSLAO");
@@ -384,6 +392,7 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 
 	var setReceivers = function(data) {
 		
+		console.log("U set receiver");
 		console.log(data);
 		var previous = $scope.selectedReceivers;
 		var current = [];
@@ -409,6 +418,10 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 		refresh();
 	}
 	var setSender = function(data) {
+		
+		console.log("U set sender");
+		console.log(data);
+		
 		
 		var temp = $scope.selectedSender;
 		var t = 0;

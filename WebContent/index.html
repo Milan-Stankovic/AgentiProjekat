@@ -48,10 +48,10 @@
   			<select ng-model="selectedPerform" ng-options="p for p in performatives" class="form-control" ><option></option></select>
 
   		<h3>Sender :<h3>
-  			<select ng-model="selectedSender" class="form-control" ng-options="s.name for s in senders"><option></option></select>
+  			<select ng-model="selectedSender" class="form-control" ng-options="s.aid.name for s in sender"><option></option></select>
 
   		<h3>Receiver :<h3>
-  			<select   ng-model="selectedReceivers" multiple="true" class="form-control" ng-options="r.name for s in receivers"><option></option></select>
+  			<select   ng-model="selectedReceivers" multiple="true" class="form-control" ng-options="r.aid.name for r in receivers"><option></option></select>
 
   		<h3>Reply to :<h3>
   			<input ng-model="replyTo"></input> 
