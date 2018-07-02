@@ -86,15 +86,22 @@ public class StartServer {
 				pong.setAid(new AID("Pong", db.getLokalniCentar(), tip));
 				db.addAgent(pong);
 				
-				System.out.println("Slave node trying to connect to cluster. Hope master is nice.");
-				if (!tryHandshake()){
-					deleteNode(db.getLokalniCentar());
-					if (!tryHandshake()){
-						deleteNode(db.getLokalniCentar());
-					}
-				}
 				
-				System.out.println("Thanks master. I'm alive.");
+				Thread t = new Thread() {
+		            @Override
+		            public void run() {
+		            	System.out.println("Slave node trying to connect to cluster. Hope master is nice.");
+						if (!tryHandshake()){
+							deleteNode(db.getLokalniCentar());
+							if (!tryHandshake()){
+								deleteNode(db.getLokalniCentar());
+							}
+						}
+						
+						System.out.println("Thanks master. I'm alive.");
+		            }
+		        };
+				
 			}
 		}
 	}

@@ -53,7 +53,9 @@ public class NodeRest implements NodeRestRemote{
 				System.out.println("Saljem zahtev da se na novi cvor obavesti o tipovima agenata na: "+"http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/classes");
 				ResteasyClient client = new ResteasyClientBuilder().build();
 				ResteasyWebTarget target = client.target("http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/classes");
+				
 				System.out.println("Target je: "+target.getUri());
+				
 				Response response = target.request(MediaType.APPLICATION_JSON).get();
 				System.out.println("Response je: "+response.getStatus()+response.getEntity());
 				ArrayList<AgentType> podrzavaniAgenti = (ArrayList<AgentType>) response.readEntity(new GenericType<List<AgentType>>() {});
@@ -91,6 +93,8 @@ public class NodeRest implements NodeRestRemote{
 		}
 		return null;
 	}
+	
+	
 	
 	@DELETE
 	@Path("/{alias}")
