@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
+import javax.inject.Inject;
 
 import dto.ContractNetDTO;
 import jms.JMSQueue;
@@ -28,7 +28,7 @@ public class Initiator extends Agent {
 	
 	private long kraj = 3000;
 	
-	@EJB
+	@Inject
 	Baza baza;
 
 	@Override
