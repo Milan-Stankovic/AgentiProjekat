@@ -47,7 +47,7 @@ public class PrimalacQueueMDB implements MessageListener {
 				for (int i = 0; i < poruka.getReceivers().length; i++) {
 					System.out.println("Nasao sam AID od agent da ga izvrsim: "+poruka.getReceivers()[i]);
 					if (db.getLokalniCentar().getAddress().equals(poruka.getReceivers()[i].getHost().getAddress())) {
-						
+						System.out.println("AGENT JE NA OVOM SERVERU!!!!");
 						AgentInterface agent = db.getAgentWithAID(poruka.getReceivers()[i]);
 						System.out.println("Nasao sam od agent da ga izvrsim: "+agent);
 						if (agent == null) {
@@ -56,6 +56,7 @@ public class PrimalacQueueMDB implements MessageListener {
 							(agent).handleMessage(poruka);
 						}
 					} else {
+						System.out.println("AGENT JE NA DRUGOM SERVERU!!!!");
 						ACLPoruka novaPoruka = new ACLPoruka(poruka, i);
 						ResteasyClient client = new ResteasyClientBuilder().build();
 						ResteasyWebTarget target = client.target("http://" + poruka.getReceivers()[i].getHost().getAddress()+ ":8096/AgentiProjekat/rest/agentskiCentar/messages");
