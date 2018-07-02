@@ -119,7 +119,7 @@ public class StartServer {
 			
 			System.out.println("Protocol code 'Handshake' initiated. Hope everything doesnt burn down in flames.");
 			ResteasyClient client = new ResteasyClientBuilder().build();
-			ResteasyWebTarget target = client.target("http://" + masterIp + ":8096/AgentiProjekat/rest/agentskiCentar/node/");
+			ResteasyWebTarget target = client.target("http://" + masterIp + ":8096/AgentiProjekat/rest/node/");
 			Response response = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(db.getLokalniCentar(), MediaType.APPLICATION_JSON));
 			List<AgentskiCentar> agentskiCentri = response.readEntity(new GenericType<List<AgentskiCentar>>(){});
 			db.updateCenters(agentskiCentri);
