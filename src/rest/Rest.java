@@ -73,7 +73,7 @@ public class Rest implements RestRemote {
 	@Path("/agents/running")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void postAgents(List<Agent> agents) {
+	public void postAgents(List<AgentInterface> agents) {
 		System.out.println("USAO SAM !");
 		
 		ArrayList<AgentInterface> ai = (ArrayList<AgentInterface>) getInterfaces((ArrayList) agents);
