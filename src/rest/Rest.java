@@ -54,7 +54,10 @@ public class Rest implements RestRemote {
 	@GET
 	@Path("/agents/classes")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<AgentType> getTipovi() {return baza.getTipovi();}
+	public List<AgentType> getTipovi() {
+		System.out.println("TIPOVI---"+baza.getTipovi());
+		return baza.getTipovi();
+	}
 	
 	@POST
 	@Path("/agents/classes")
