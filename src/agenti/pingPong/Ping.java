@@ -31,7 +31,7 @@ public class Ping extends Agent{
 		if(poruka.getPerformative().equals(Performative.REQUEST)) {
 			ACLPoruka aclPoruka = new ACLPoruka();
 			aclPoruka.setSender(this.getAid());
-			aclPoruka.setReceivers(findPongAgents());
+			aclPoruka.setReceivers(new AID[]{poruka.getSender()});
 			aclPoruka.setConversationID(poruka.getConversationID());
 			aclPoruka.setPerformative(Performative.REQUEST);
 			new JMSQueue(aclPoruka);
@@ -40,11 +40,11 @@ public class Ping extends Agent{
 		}
 	}
 	
-	private AID[] findPongAgents() {
+	/*private AID[] findPongAgents() {
 		ArrayList<AID> ai = db.getAgentByType("Pong");
 		if (ai.isEmpty())
 			return new AID[]{};
 		else
 			return new AID[]{ai.get(0)};
-	}
+	}*/
 }
