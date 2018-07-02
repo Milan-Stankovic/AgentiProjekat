@@ -139,6 +139,7 @@ public class StartServer {
 			List<AgentskiCentar> agentskiCentri = response.readEntity(new GenericType<List<AgentskiCentar>>(){});
 			System.out.println("Dobio sam listu cvorova: "+agentskiCentri);
 			db.updateCenters(agentskiCentri);
+			System.out.println("Stavio sam listu cvorova: "+db.getAgentskiCentri());
 			System.out.println("Protocol code 'Handshake' is succesfull");
 					
 		} catch (Exception e){

@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
+import javax.inject.Inject;
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -25,7 +26,7 @@ import model.Baza;
 import model.Performative;
 import model.TipWs;
 
-
+@LocalBean
 @Stateful
 @ServerEndpoint(
 		
@@ -34,16 +35,15 @@ import model.TipWs;
 	    encoders = {OdlazniWsDTOEncoder.class}
 		
 		)
-
 public class WebSocket implements WebSocketRemote {
 
 
 	List<Session> lokalneSesije = new ArrayList<>();
 	
-	@EJB
+	@Inject
 	Rest agentskiCentar;
 	
-	@EJB
+	@Inject
 	Baza baza;
 	
 

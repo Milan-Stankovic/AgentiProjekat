@@ -126,6 +126,7 @@ public class Rest implements RestRemote {
 
 			for (AgentskiCentar tempA : baza.getAgentskiCentri()) {
 				
+				System.out.println("http://" + tempA.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/running");
 				
 				ResteasyClient client = new ResteasyClientBuilder().build();
 				if (!tempA.getAddress().equals(baza.getLokalniCentar().getAddress())) {
