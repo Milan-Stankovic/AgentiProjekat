@@ -39,16 +39,8 @@ public class Baza implements Serializable{
 
 	public void sendActiveToSocket() throws IOException, EncodeException{
 		// napravi listu aid-a umesto remote interfejsa
-		List<AID> aids = new ArrayList<>();
-
-		for (AID aid : agenti.keySet()) {
-			aids.add(aid);
-		}
-		
 		DolazniWsDTO d = new DolazniWsDTO();
-		d.setTip(TipWs.ALL_AGENTS);
-		d.setObject(aids);
-
+		d.setTip(TipWs.ACTIVE);
 
 		// prodji kroz sve sesije i posalji listu agenata
 		for (Session s : sesije) {
