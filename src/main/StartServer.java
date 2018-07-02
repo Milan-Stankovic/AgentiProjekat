@@ -113,7 +113,7 @@ public class StartServer {
 			ResteasyWebTarget target1 = client1.target("http://" + masterIp + ":8096/AgentiProjekat/rest/agentskiCentar/test");
 			System.out.println("Target je: "+target1.getUri());
 
-			Response response2 = target1.request(MediaType.APPLICATION_JSON).get();
+			Response response2 = target1.request(MediaType.TEXT_PLAIN).get();
 			System.out.println("Response je: "+response2.getStatus()+response2.getEntity());
 			
 			
