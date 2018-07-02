@@ -87,7 +87,7 @@ public class StartServer {
 				pong.setAid(new AID("Pong", db.getLokalniCentar(), tip));
 				db.addAgent(pong);
 				
-				System.out.println("Starting new thread");
+				
 				Thread t = new Thread() {
 		            @Override
 		            public void run() {
@@ -102,7 +102,8 @@ public class StartServer {
 						System.out.println("Thanks master. I'm alive.");
 		            }
 		        };
-		        System.out.println("Ending new thread");
+		        System.out.println("Starting new thread");
+		        t.start();
 			}
 		}
 	}
