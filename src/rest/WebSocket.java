@@ -133,7 +133,7 @@ public class WebSocket implements WebSocketRemote {
 							
 						case UKLJUCI: 
 								
-							agentskiCentar.startAgent(ws.getTipAgenta(), ws.getNaziv());						
+						//	agentskiCentar.startAgent(ws.getTipAgenta(), ws.getNaziv());						
 							break;
 							
 						case ISKLJUCI: 
