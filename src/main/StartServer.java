@@ -76,14 +76,7 @@ public class StartServer {
 				tipovi.add(tip);
 				tipovi.add(tip1);
 				db.setTipovi(tipovi);
-				
-				/*Ping ping = new Ping();
-				ping.setAid(new AID("Ping", db.getLokalniCentar(), tip));
-				db.addAgent(ping);
-				*/
-				Pong pong = new Pong();
-				pong.setAid(new AID("Pong", db.getLokalniCentar(), tip1));
-				db.addAgent(pong);
+
 				
 				System.out.println("Master node initiated. Prepare to be amazed.");
 			}
@@ -95,11 +88,13 @@ public class StartServer {
 				tip.setName("Initiator");
 				ArrayList<AgentType> tipovi = new ArrayList<>();
 				tipovi.add(tip);
+				
+				AgentType tip1 = new AgentType();
+				tip1.setModule("EJB");
+				tip1.setName("Participant");
+				tipovi.add(tip1);
+				
 				db.setTipovi(tipovi);
-				
-
-				
-				
 				Thread t = new Thread() {
 		            @Override
 		            public void run() {
