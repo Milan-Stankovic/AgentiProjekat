@@ -237,14 +237,15 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
     		$scope.$apply();
     }
     
-    $scope.activate = function(tip, name) {
+    $scope.activate = function(tip) {
     	
-    	if (!name || name.trim.length==0) {
+    	if (!tip.agentName || tip.agentName.length==0) {
     		
     		alert("Input agent name");
     		return;
     	}
     	
+    	var name = tip.agentName;
     	
     	if ($scope.aktivanWs) {	
     		
@@ -379,6 +380,8 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 
 
 	var setReceivers = function(data) {
+		
+		console.log(data);
 		var previous = $scope.selectedReceivers;
 		var current = [];
 		var temp = 0;

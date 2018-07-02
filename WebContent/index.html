@@ -27,11 +27,11 @@
 
    		<h3>All agent types : <h3>
    		<div ng-repeat="tip in tipovi">
-   			<button type="submit" style="float: right !important;" ng-click="activate(tip, agentName)" class="btn btn-primary"   >
+   			<button type="submit" style="float: right !important;" ng-click="activate(tip)" class="btn btn-primary"   >
                 <img class="clearDelete" src="activate.png" width="15" height="15" title="Add" alt="submit" />
             </button>
 			<p > {{tip.name}}</p>
-			<input ng-mode="agentName"></input>
+			<input ng-model="tip.agentName"></input>
 			
 
 		</div>
