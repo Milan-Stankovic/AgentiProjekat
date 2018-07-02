@@ -103,8 +103,8 @@ public class Generator extends Agent {
 				ContractNetDTO cdto = new ContractNetDTO();
 				
 				ACLPoruka next = new ACLPoruka();
-				next.setSender(this.id);
-				next.setReceivers(new AID[] { this.id });
+				next.setSender(this.aid);
+				next.setReceivers(new AID[] { this.aid });
 				next.setPerformative(Performative.STARTGAN);
 				next.setProtocol((String)poruka.getUserArgs().get("GEN_LOC"));// OVDE CE BITI STRING ZA LOKACIJU PY-a
 				next.setOntology((String)poruka.getUserArgs().get("GEN_RES_LOC")); // LOKACIJA TEXT FILE-a
@@ -158,8 +158,8 @@ public class Generator extends Agent {
 			
 		
 			ACLPoruka next = new ACLPoruka();
-			next.setSender(this.id);
-			next.setReceivers(new AID[] { this.id });
+			next.setSender(this.aid);
+			next.setReceivers(new AID[] { this.aid });
 			next.setPerformative(Performative.RETURNRESULTGENERATOR);
 			next.setOntology(poruka.getOntology());
 			next.setLanguage(poruka.getLanguage());
@@ -172,13 +172,13 @@ public class Generator extends Agent {
 			if(broj_batcheva==0) {
 				
 				ACLPoruka next = new ACLPoruka();
-				next.setSender(this.id);
-				next.setReceivers(new AID[] { this.id });
+				next.setSender(this.aid);
+				next.setReceivers(new AID[] { this.aid });
 				next.setPerformative(Performative.ENDGAN);
 				
 				
 				ACLPoruka next2 = new ACLPoruka();
-				next2.setSender(this.id);
+				next2.setSender(this.aid);
 				next2.setReceivers(new AID[] { diskriminator });
 				next2.setPerformative(Performative.ENDGAN);
 				System.out.println("KRAJ");
@@ -210,7 +210,7 @@ public class Generator extends Agent {
 							
 
 							ACLPoruka next2 = new ACLPoruka();
-							next2.setSender(this.id);
+							next2.setSender(this.aid);
 							next2.setReceivers(new AID[] { diskriminator });
 							next2.setPerformative(Performative.ENDGAN);
 							next2.setContentObj(new File(poruka.getOntology())); // CEO FAJL DOBIJAS

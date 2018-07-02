@@ -86,8 +86,8 @@ public class Initiator extends Agent {
 			
 			
 			ACLPoruka next = new ACLPoruka();
-			next.setSender(this.id);
-			next.setReceivers(new AID[] { this.id });
+			next.setSender(this.aid);
+			next.setReceivers(new AID[] { this.aid });
 			next.setPerformative(Performative.NEXT);
 
 			//Thread.sleep(kraj); // Mislim da ne smem ovako, jer nece moci da primi, ima li neko drugo odlaganje ? :D

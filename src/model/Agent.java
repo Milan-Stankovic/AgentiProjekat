@@ -2,34 +2,34 @@ package model;
 
 public class Agent implements AgentInterface {
 	
-protected AID id;
+protected AID aid;
 	
 	public Agent(AID id){
-		this.id = id;
+		this.aid = id;
 	}
 	
 	public Agent(){
-		id = null;
+		aid = null;
 	}
 	
 	public void init(AID aid) {
-		this.id = aid;
+		this.aid = aid;
 	}
 	
 
 	@Override
 	public String toString() {
-		return "Agent [id=" + id + "]";
+		return "Agent [id=" + aid + "]";
 	}
 	
 	@Override
 	public void setAid(AID aid){
-		this.id = aid;
+		this.aid = aid;
 	}
 	
 	@Override
 	public AID getAid(){
-		return id;
+		return aid;
 	}
 
 	@Override

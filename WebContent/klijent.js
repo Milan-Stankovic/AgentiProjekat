@@ -336,9 +336,45 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
     
     $scope.send = function(selectedPerform, selectedSender, selectedReceivers, replyTo, content, language, encoding, ontology, protocol, convId, replyWith, replyBy){
     	
+    	if(!selectedPerform)
+    		selectedPerform="";
+    	
+    	if(!replyTo)
+    		replyTo="";
+    	
+    	
+    	if(!content)
+    		content="";
+    	
+    	if(!language)
+    		language="";
+    	
+    	if(!encoding)
+    		encoding="";
+    	
+    	if(!ontology)
+    		ontology="";
+    	
+    	if(!convId)
+    		convId="";
+    	
+    	if(!replyWith)
+    		replyWith="";
+    	
+    	if(!replyBy)
+    		replyBy="";
+    	
+    	if(!protocol)
+    		protocol="";
+    	
+    	for(var i=0; i<selectedReceivers.lenght; i++){
+    		selectedReceivers[i]= selectedReceivers[i].aid;
+    	}
+    	
+    	
 		var poruka = {
 			"performative": selectedPerform,
-			"sender": selectedSender,
+			"sender": selectedSender.aid,
 			"receivers":  selectedReceivers,
 			"replyTo":  replyTo,
 			"content":  content,
