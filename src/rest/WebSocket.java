@@ -18,6 +18,8 @@ import javax.websocket.server.ServerEndpoint;
 import dto.DolazniWsDTO;
 import dto.OdlazniWsDTO;
 import encoderDecoder.DolazniWsDTODecoder;
+import encoderDecoder.DolazniWsDTOEncoder;
+import encoderDecoder.OdlazniWsDTODecoder;
 import encoderDecoder.OdlazniWsDTOEncoder;
 import model.ACLPoruka;
 import model.Agent;
@@ -32,8 +34,8 @@ import model.TipWs;
 @ServerEndpoint(
 		
 	    value = "/ws",
-        decoders = {DolazniWsDTODecoder.class},
-	    encoders = {OdlazniWsDTOEncoder.class}
+        decoders = {DolazniWsDTODecoder.class, OdlazniWsDTODecoder.class},
+	    encoders = {OdlazniWsDTOEncoder.class, DolazniWsDTOEncoder.class}
 		
 		)
 public class WebSocket implements WebSocketRemote {
