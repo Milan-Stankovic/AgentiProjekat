@@ -69,8 +69,12 @@ public class StartServer {
 				AgentType tip = new AgentType();
 				tip.setModule("EJB");
 				tip.setName("Ping");
+				AgentType tip1 = new AgentType();
+				tip.setModule("EJB");
+				tip.setName("Pong");
 				ArrayList<AgentType> tipovi = new ArrayList<>();
 				tipovi.add(tip);
+				tipovi.add(tip1);
 				db.setTipovi(tipovi);
 				
 				Ping ping = new Ping();
@@ -88,7 +92,7 @@ public class StartServer {
 				//TODO dodaj tip agenta koji centar podrzava
 				AgentType tip = new AgentType();
 				tip.setModule("EJB");
-				tip.setName("Pong");
+				tip.setName("Initiator");
 				ArrayList<AgentType> tipovi = new ArrayList<>();
 				tipovi.add(tip);
 				db.setTipovi(tipovi);
