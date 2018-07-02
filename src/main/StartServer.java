@@ -55,7 +55,11 @@ public class StartServer {
 		//ucitavanje IP i kreiranje agentskog centra
 		if(loadIp()) {
 			db.setMasterIp(masterIp);
-			db.setLokalniCentar(new AgentskiCentar(curentHostname, currentIp));
+			
+			AgentskiCentar a = new AgentskiCentar(curentHostname, currentIp);
+			db.setLokalniCentar(a);
+			db.insertAgentskiCentar(a);
+			
 			
 			//ako je kreirani cvor bas master dodam samo par tipova agenata
 			//System.out.println("POREDIM SLEDECA 2:"+currentIp+"---"+db.getMasterIp()+"---"+currentIp.equals(db.getMasterIp()));
@@ -133,6 +137,7 @@ public class StartServer {
 			ResteasyWebTarget target = client.target("http://" + masterIp + ":8096/AgentiProjekat/rest/node/");
 			Response response = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(db.getLokalniCentar(), MediaType.APPLICATION_JSON));
 			List<AgentskiCentar> agentskiCentri = response.readEntity(new GenericType<List<AgentskiCentar>>(){});
+			System.out.println("Dobio sam listu cvorova: "+agentskiCentri);
 			db.updateCenters(agentskiCentri);
 			System.out.println("Protocol code 'Handshake' is succesfull");
 					

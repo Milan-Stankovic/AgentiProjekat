@@ -68,8 +68,10 @@ public class NodeRest implements NodeRestRemote{
 						response = target.request().post(Entity.entity(novCenatar, MediaType.APPLICATION_JSON));
 					}
 				}
+				System.out.println("Cvorove koje te obavestavam da imaju: PREEEE"+db.getAgentskiCentri());
 				db.insertAgentskiCentar(novCenatar);
 
+				System.out.println("Cvorove koje te obavestavam da imaju: POSLEEE"+db.getAgentskiCentri());
 				System.out.println("Saljem tipove agenata na ostale cvorove");
 				for (AgentskiCentar nodeovi : db.getAgentskiCentri()) {
 					if (!nodeovi.getAddress().equals(db.getMasterIp())) {
