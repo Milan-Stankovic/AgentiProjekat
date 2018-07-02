@@ -29,6 +29,8 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
+import agenti.pingPong.Ping;
+import agenti.pingPong.Pong;
 import model.AID;
 import model.Agent;
 import model.AgentType;
@@ -71,11 +73,11 @@ public class StartServer {
 				tipovi.add(tip);
 				db.setTipovi(tipovi);
 				
-				Agent ping = new Agent();
+				Ping ping = new Ping();
 				ping.setAid(new AID("Ping", db.getLokalniCentar(), tip));
 				db.addAgent(ping);
 				
-				Agent pong = new Agent();
+				Pong pong = new Pong();
 				pong.setAid(new AID("Pong", db.getLokalniCentar(), tip));
 				db.addAgent(pong);
 				
