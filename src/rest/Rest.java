@@ -19,7 +19,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
@@ -50,6 +52,56 @@ public class Rest implements RestRemote {
 		System.out.println("UPAO JE U TEST WTF ???");
 		
 		return "RADIII !!!";}
+	
+	@POST
+	@Path("/node")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<AgentskiCentar> registerNode(AgentskiCentar novCenatar) {
+		System.out.println("Poceta registracija na Master node");
+		try {
+			if(baza.getMasterIp().equals(baza.getLokalniCentar().getAddress())) {
+				System.out.println("Saljem zahtev da se na novi cvor obavesti o tipovima agenata na: "+"http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/classes");
+				ResteasyClient client = new ResteasyClientBuilder().build();
+				ResteasyWebTarget target = client.target("http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/classes");
+				System.out.println("Target je: "+target.getUri());
+				Response response = target.request(MediaType.APPLICATION_JSON).get();
+				System.out.println("Response je: "+response.getStatus()+response.getEntity());
+				ArrayList<AgentType> podrzavaniAgenti = (ArrayList<AgentType>) response.readEntity(new GenericType<List<AgentType>>() {});
+				System.out.println("Dal eradi ono sto mislimo da ne radi: "+podrzavaniAgenti);
+				baza.updateAgentTypes(podrzavaniAgenti);
+				
+				System.out.println("Saljem novi node na ostale ne master nodeove");
+				for (AgentskiCentar nodeovi : baza.getAgentskiCentri()) {
+					if (!nodeovi.getAddress().equals(baza.getMasterIp())) {
+						target = client.target("http://" + nodeovi.getAddress() + ":8096/AgentiProjekat/rest/node");
+						response = target.request().post(Entity.entity(novCenatar, MediaType.APPLICATION_JSON));
+					}
+				}
+				baza.insertAgentskiCentar(novCenatar);
+
+				System.out.println("Saljem tipove agenata na ostale cvorove");
+				for (AgentskiCentar nodeovi : baza.getAgentskiCentri()) {
+					if (!nodeovi.getAddress().equals(baza.getMasterIp())) {
+						target = client.target("http://" + nodeovi.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/classes");
+						response = target.request().post(Entity.entity(baza.getTipovi(), MediaType.APPLICATION_JSON));
+					}
+				}
+				
+				System.out.println("Saljem na novi node agente koji radi");
+				target = client.target("http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/running");
+				response = target.request().post(Entity.entity(baza.getAgenti(), MediaType.APPLICATION_JSON));
+				
+				return baza.getAgentskiCentri();
+			}else {
+				baza.insertAgentskiCentar(novCenatar);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
+	}
 	
 	@GET
 	@Path("/agents/classes")
