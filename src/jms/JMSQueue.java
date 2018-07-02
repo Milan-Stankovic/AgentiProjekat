@@ -48,5 +48,38 @@ public class JMSQueue {
 			ex.printStackTrace();
 		}
 	}
+	
+	
+	public JMSQueue(ACLPoruka aclMessage, long delay) {
+		try {
+			Context context = new InitialContext();
+			
+			ConnectionFactory cf = (ConnectionFactory) context.lookup("java:jboss/exported/jms/RemoteConnectionFactory");
+		    final Queue queue = (Queue) context.lookup("java:jboss/exported/jms/queue/mojQueue");
+		    context.close();
+				   
+			Connection connection = cf.createConnection();//"guest", "guestguest");
+			final Session session = connection.createSession(false,
+					Session.AUTO_ACKNOWLEDGE);
+			
+			connection.start();
+
+		    ObjectMessage msg = session.createObjectMessage(aclMessage);
+		    long sent = System.currentTimeMillis();
+		    msg.setLongProperty("sent", sent);
+
+			MessageProducer producer = session.createProducer(queue);
+			log.info("Saljem poruku na queue: " + msg.getObject());
+			producer.setDeliveryDelay(delay);
+			producer.send(msg);
+			
+			producer.close();
+			session.close();
+			connection.close();
+		    
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+}
 
 }
