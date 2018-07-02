@@ -94,6 +94,7 @@ public class NodeRest implements NodeRestRemote{
 				db.insertAgentskiCentar(novCenatar);
 			}
 		}catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 		return null;
