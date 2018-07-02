@@ -47,14 +47,25 @@ public class NodeRest implements NodeRestRemote{
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public List<AgentskiCentar> registerNode(AgentskiCentar novCenatar) {
+		
+		ResteasyClient client1 = new ResteasyClientBuilder().build();
+		ResteasyWebTarget target1 = client1.target("http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/test");
+		System.out.println("Target je: "+target1.getUri());
+
+		Response response2 = target1.request(MediaType.APPLICATION_JSON).get();
+		System.out.println("Response je: "+response2.getStatus()+response2.getEntity());
+		
 		System.out.println("Poceta registracija na Master node");
 		try {
 			if(db.getMasterIp().equals(db.getLokalniCentar().getAddress())) {
-				System.out.println("Saljem zahtev da se na novi cvor obavesti o tipovima agenata");
+				System.out.println("Saljem zahtev da se na novi cvor obavesti o tipovima agenata na: "+"http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/classes");
 				ResteasyClient client = new ResteasyClientBuilder().build();
 				ResteasyWebTarget target = client.target("http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/classes");
+				System.out.println("Target je: "+target.getUri());
 				Response response = target.request(MediaType.APPLICATION_JSON).get();
+				System.out.println("Response je: "+response.getStatus()+response.getEntity());
 				ArrayList<AgentType> podrzavaniAgenti = (ArrayList<AgentType>) response.readEntity(new GenericType<List<AgentType>>() {});
+				System.out.println("Dal eradi ono sto mislimo da ne radi: "+podrzavaniAgenti);
 				db.updateAgentTypes(podrzavaniAgenti);
 				
 				System.out.println("Saljem novi node na ostale ne master nodeove");
