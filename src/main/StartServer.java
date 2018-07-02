@@ -71,6 +71,10 @@ public class StartServer {
 				ping.setAid(new AID("Ping", db.getLokalniCentar(), tip));
 				db.addAgent(ping);
 				
+				Agent pong = new Agent();
+				pong.setAid(new AID("Pong", db.getLokalniCentar(), tip));
+				db.addAgent(pong);
+				
 				System.out.println("Master node initiated. Prepare to be amazed.");
 			}
 			else {
@@ -83,9 +87,7 @@ public class StartServer {
 				tipovi.add(tip);
 				db.setTipovi(tipovi);
 				
-				Agent pong = new Agent();
-				pong.setAid(new AID("Pong", db.getLokalniCentar(), tip));
-				db.addAgent(pong);
+
 				
 				
 				Thread t = new Thread() {

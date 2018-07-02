@@ -23,6 +23,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
 import model.ACLPoruka;
+import model.Agent;
 import model.AgentType;
 import model.AgentskiCentar;
 import model.Baza;
@@ -52,10 +53,8 @@ public class NodeRest implements NodeRestRemote{
 			if(db.getMasterIp().equals(db.getLokalniCentar().getAddress())) {
 				//System.out.println("Saljem zahtev da se na novi cvor obavesti o tipovima agenata na: "+"http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/classes");
 				ResteasyClient client = new ResteasyClientBuilder().build();
-				ResteasyWebTarget target = client.target("http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/classes");
-				
+				ResteasyWebTarget target = client.target("http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/classes");		
 				//System.out.println("Target je: "+target.getUri());
-				
 				Response response = target.request(MediaType.APPLICATION_JSON).get();
 				//System.out.println("Response je: "+response.getStatus()+response.getEntity());
 				ArrayList<AgentType> podrzavaniAgenti = (ArrayList<AgentType>) response.readEntity(new GenericType<List<AgentType>>() {});
@@ -82,8 +81,11 @@ public class NodeRest implements NodeRestRemote{
 				System.out.println("Saljem na novi node agente koji radi");
 				
 				target = client.target("http://" + novCenatar.getAddress() + ":8096/AgentiProjekat/rest/agentskiCentar/agents/running");
-				System.out.println("Target: "+target);
-				response = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(db.getAgenti(), MediaType.APPLICATION_JSON));
+				System.out.println("Target: "+target.getUri());
+				ArrayList<Agent> a = new ArrayList<>();
+				a.addAll(db.getAgenti().values());
+				response = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(a, MediaType.APPLICATION_JSON));
+				System.out.println("Response: "+response.getStatus()+response.getEntity());
 				
 				return db.getAgentskiCentri();
 			}else {
