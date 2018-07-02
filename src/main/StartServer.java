@@ -126,13 +126,7 @@ public class StartServer {
 	public Boolean tryHandshake(){
 		
 		try {
-			ResteasyClient client1 = new ResteasyClientBuilder().build();
-			ResteasyWebTarget target1 = client1.target("http://" + masterIp + ":8096/AgentiProjekat/rest/agentskiCentar/test");
-			System.out.println("Target je: "+target1.getUri());
-
-			Response response2 = target1.request(MediaType.TEXT_PLAIN).get();
-			System.out.println("Response je: "+response2.getStatus()+response2.getEntity());
-			
+		
 			
 			System.out.println("Protocol code 'Handshake' initiated. Hope everything doesnt burn down in flames.");
 			ResteasyClient client = new ResteasyClientBuilder().build();
@@ -151,7 +145,7 @@ public class StartServer {
 					
 		} catch (Exception e){
 			System.out.println("Protocol code 'Handshake' failed");
-			e.printStackTrace();
+			//e.printStackTrace();
 			return false;
 		}
 		
@@ -159,10 +153,14 @@ public class StartServer {
 	}
 		
 	public void deleteNode(AgentskiCentar ac){
-		
-		ResteasyClient client = new ResteasyClientBuilder().build();
-		ResteasyWebTarget target = client.target("http://" + masterIp +  ":8096/AgentiProjekat/rest/node/" + ac.getAlias());
-		target.request().delete();
+		try {
+			ResteasyClient client = new ResteasyClientBuilder().build();
+			ResteasyWebTarget target = client.target("http://" + masterIp +  ":8096/AgentiProjekat/rest/node/" + ac.getAlias());
+			target.request().delete();
+		}
+		catch (Exception e) {
+			System.out.println("Undead server ping rolback!");
+		}
 			
 	}
 	
