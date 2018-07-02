@@ -66,8 +66,8 @@ public class Baza implements Serializable{
 			if(a.getHost().getAlias().equals(aid.getHost().getAlias())&&
 					a.getHost().getAddress().equals(aid.getHost().getAddress())&&
 					a.getName().equals(aid.getName())&&
-					a.getType().getName().equals(aid.getType().getName())&&
-					a.getType().getModule().equals(aid.getType().getModule())) {
+					a.getType().getName().equals(aid.getType().getName())/*&&
+					a.getType().getModule().equals(aid.getType().getModule())*/) {
 				return agenti.get(a);
 			}
 		}
