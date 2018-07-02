@@ -85,7 +85,7 @@ public class Initiator extends Agent {
 			//evo saljem
 			
 			
-			ACLPoruka next = new ACLPoruka();
+			final ACLPoruka next = new ACLPoruka();
 			next.setSender(this.aid);
 			next.setReceivers(new AID[] { this.aid });
 			next.setPerformative(Performative.NEXT);
@@ -94,8 +94,28 @@ public class Initiator extends Agent {
 			
 			System.out.println("DALJE");
 			
+			
+			Thread t = new Thread() {
+	            @Override
+	            public void run() {
+	            	
+	            	 try {
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	            	
+	            	new JMSQueue(next);
+					
+	            }
+	        };
+
+	        t.start();
+			
+			
 			//GRBA SALJI PORUKU
-			new JMSQueue(next);
+			//new JMSQueue(next);
 
 		} else if (poruka.getPerformative().equals(Performative.REFUSE)) {
 			
