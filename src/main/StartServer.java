@@ -19,6 +19,7 @@ import javax.ejb.Schedule;
 import javax.ejb.Schedules;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.swing.plaf.synth.SynthSpinnerUI;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -86,7 +87,7 @@ public class StartServer {
 				pong.setAid(new AID("Pong", db.getLokalniCentar(), tip));
 				db.addAgent(pong);
 				
-				
+				System.out.println("Starting new thread");
 				Thread t = new Thread() {
 		            @Override
 		            public void run() {
@@ -101,7 +102,7 @@ public class StartServer {
 						System.out.println("Thanks master. I'm alive.");
 		            }
 		        };
-				
+		        System.out.println("Ending new thread");
 			}
 		}
 	}
