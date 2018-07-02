@@ -340,7 +340,7 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
     		selectedPerform="";
     	
     	if(!replyTo)
-    		replyTo="";
+    		replyTo=null;
     	
     	
     	if(!content)
@@ -367,24 +367,35 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
     	if(!protocol)
     		protocol="";
     	
-    	for(var i=0; i<selectedReceivers.lenght; i++){
-    		selectedReceivers[i]= selectedReceivers[i].aid;
+    	var list = [];
+    	
+    	console.log(selectedReceivers);
+
+    	console.log(selectedReceivers[0]);
+    	
+    	console.log(selectedReceivers[0].aid);
+    	
+    	console.log(selectedReceivers.length)
+    	
+    	for(var i=0; i<selectedReceivers.length; i++){
+    		console.log("TU SAM !");
+    		list.push(selectedReceivers[i].aid);
     	}
     	
     	
 		var poruka = {
 			"performative": selectedPerform,
 			"sender": selectedSender.aid,
-			"receivers":  selectedReceivers,
+			"receivers":  list,
 			"replyTo":  replyTo,
 			"content":  content,
 			"language":  language,
 			"encoding":  encoding,
 			"ontology":  ontology,
 			"protocol":  protocol,
-			"conversationId":  convId,
+			"conversationID":  convId,
 			"replyWith":  replyWith,
-			"replayBy":  replyBy
+			"replyBy":  replyBy
 		}
 		
 		console.log(poruka);
