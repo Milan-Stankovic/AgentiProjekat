@@ -116,7 +116,7 @@ public class Rest implements RestRemote {
 			
 			//Object obj223 = context.lookup("java:module/Pong"); // Totova madjija mada on nesto kao radi preko interfejsa
 			
-			AgentInterface agent = (AgentInterface) context.lookup("java:module/Pong"); // Totova madjija mada on nesto kao radi preko interfejsa
+			AgentInterface agent = (AgentInterface) context.lookup("java:module/"+type); // Totova madjija mada on nesto kao radi preko interfejsa
 			agent.init(new AID(name, baza.getLokalniCentar(), new AgentType(type, null)));
 
 			
