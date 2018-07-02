@@ -8,6 +8,7 @@ import java.net.NetworkInterface;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -27,6 +28,9 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
+import model.AID;
+import model.Agent;
+import model.AgentType;
 import model.AgentskiCentar;
 import model.Baza;
 
@@ -55,12 +59,32 @@ public class StartServer {
 			//ako je kreirani cvor bas master dodam samo par tipova agenata
 			//System.out.println("POREDIM SLEDECA 2:"+currentIp+"---"+db.getMasterIp()+"---"+currentIp.equals(db.getMasterIp()));
 			if(currentIp.equals(db.getMasterIp())) {
-				//TODO dodati tipove agenata
+				AgentType tip = new AgentType();
+				tip.setModule("EJB");
+				tip.setName("Ping");
+				ArrayList<AgentType> tipovi = new ArrayList<>();
+				tipovi.add(tip);
+				db.setTipovi(tipovi);
+				
+				Agent ping = new Agent();
+				ping.setAid(new AID("Ping", db.getLokalniCentar(), tip));
+				db.addAgent(ping);
 				
 				System.out.println("Master node initiated. Prepare to be amazed.");
 			}
 			else {
 				//TODO dodaj tip agenta koji centar podrzava
+				AgentType tip = new AgentType();
+				tip.setModule("EJB");
+				tip.setName("Pong");
+				ArrayList<AgentType> tipovi = new ArrayList<>();
+				tipovi.add(tip);
+				db.setTipovi(tipovi);
+				
+				Agent pong = new Agent();
+				pong.setAid(new AID("Pong", db.getLokalniCentar(), tip));
+				db.addAgent(pong);
+				
 				System.out.println("Slave node trying to connect to cluster. Hope master is nice.");
 				if (!tryHandshake()){
 					deleteNode(db.getLokalniCentar());
