@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,13 @@ import javax.ejb.Lock;
 import javax.ejb.LockType;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.websocket.EncodeException;
 import javax.websocket.Session;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import dto.DolazniWsDTO;
+import dto.OdlazniWsDTO;
 
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 @Startup
@@ -29,6 +36,25 @@ public class Baza implements Serializable{
 	private AgentskiCentar lokalniCentar; // Grba tu mi postavi na pocetku trenutni centar
 	
 	private String masterIp = ""; // Kada budemo testirali 
+
+	public void sendActiveToSocket() throws IOException, EncodeException{
+		// napravi listu aid-a umesto remote interfejsa
+		List<AID> aids = new ArrayList<>();
+
+		for (AID aid : agenti.keySet()) {
+			aids.add(aid);
+		}
+		
+		DolazniWsDTO d = new DolazniWsDTO();
+		d.setTip(TipWs.ALL_AGENTS);
+		d.setObject(aids);
+
+
+		// prodji kroz sve sesije i posalji listu agenata
+		for (Session s : sesije) {
+			s.getBasicRemote().sendObject(d);
+		}	
+}
 	
 	public ArrayList<AID> getAgentByType(String type) {
 		ArrayList<AID> retVal = new ArrayList<AID>();

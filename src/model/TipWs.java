@@ -7,6 +7,7 @@ public enum TipWs {
 	ACTIVE, 
 	UKLJUCI, 
 	ISKLJUCI, 
-	PORUKA
+	PORUKA,
+	ALL_AGENTS
 	
 }

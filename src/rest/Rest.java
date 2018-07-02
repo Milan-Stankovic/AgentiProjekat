@@ -65,15 +65,15 @@ public class Rest implements RestRemote {
 	
 	@POST
 	@Path("/agents/running")
-	@Produces(MediaType.APPLICATION_JSON)//TODO
+	@Produces(MediaType.APPLICATION_JSON)
 	public void postAgents(List<Agent> agents) {
 		ArrayList<AgentInterface> ai = (ArrayList<AgentInterface>) getInterfaces((ArrayList) agents);
 		baza.addAllAgents(ai);
 		try {
-			//MISLIM DA JE OVO WEBSOCKET DEO
+			baza.sendActiveToSocket();
 		} catch (Exception e) {
-			/*System.out.println("Pukao sendStartedAgents u AC");
-			e.printStackTrace();*/
+			System.out.println("Puko ws.");
+			e.printStackTrace();
 		}
 	}
 	
