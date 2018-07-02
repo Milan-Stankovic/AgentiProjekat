@@ -70,8 +70,8 @@ public class StartServer {
 				tip.setModule("EJB");
 				tip.setName("Ping");
 				AgentType tip1 = new AgentType();
-				tip.setModule("EJB");
-				tip.setName("Pong");
+				tip1.setModule("EJB");
+				tip1.setName("Pong");
 				ArrayList<AgentType> tipovi = new ArrayList<>();
 				tipovi.add(tip);
 				tipovi.add(tip1);
