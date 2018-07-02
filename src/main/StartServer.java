@@ -139,6 +139,11 @@ public class StartServer {
 			ResteasyWebTarget target = client.target("http://" + masterIp + ":8096/AgentiProjekat/rest/node/");
 			Response response = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(db.getLokalniCentar(), MediaType.APPLICATION_JSON));
 			List<AgentskiCentar> agentskiCentri = response.readEntity(new GenericType<List<AgentskiCentar>>(){});
+			if(agentskiCentri==null) {
+				System.out.println("*Samo jedan if* kako da ne!");
+				return false;
+			}
+				
 			System.out.println("Dobio sam listu cvorova: "+agentskiCentri);
 			db.updateCenters(agentskiCentri);
 			System.out.println("Stavio sam listu cvorova: "+db.getAgentskiCentri());
