@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
+import javax.ejb.Singleton;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
 import javax.websocket.EncodeException;
@@ -30,7 +31,7 @@ import model.Performative;
 import model.TipWs;
 
 @LocalBean
-@Stateful
+@Singleton
 @ServerEndpoint(
 		
 	    value = "/ws",
