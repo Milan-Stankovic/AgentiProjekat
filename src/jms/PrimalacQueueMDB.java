@@ -7,6 +7,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
+import javax.websocket.Session;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 
@@ -15,9 +16,12 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
 import agenti.pingPong.Ping;
+import dto.DolazniWsDTO;
 import model.ACLPoruka;
 import model.AgentInterface;
 import model.Baza;
+import model.TipWs;
+import rest.WebSocket;
 
 
 
@@ -29,6 +33,9 @@ public class PrimalacQueueMDB implements MessageListener {
 	
 	@EJB
 	private Baza db;
+	
+	@EJB
+	private WebSocket ws;
 
 	public void onMessage(Message msg) {
 		//System.out.println("RADI TEST ZA JMS");
@@ -54,6 +61,12 @@ public class PrimalacQueueMDB implements MessageListener {
 							System.out.println("Reciever: "+poruka.getReceivers()[i]+" not found");
 						} else {
 							System.out.println("RADIM HANDLE ZA MESSAGE: "+poruka.getPerformative());
+							DolazniWsDTO d = new DolazniWsDTO();
+							d.setObject(poruka);
+							d.setTip(TipWs.PORUKA);
+							for(Session s:db.getSesije()) {
+								ws.message(s, d);
+							}
 							(agent).handleMessage(poruka);
 						}
 					} else {
