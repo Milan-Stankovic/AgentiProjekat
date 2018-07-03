@@ -226,10 +226,10 @@ public class Rest implements RestRemote {
 			        "-c",
 			        "echo password | python script.py '" + packet.toString() + "'"
 			        */
-		String s1 = "cd AiTest,"+
+		String s1 = "cd,"+//"cd AiTest,"+
 					""+
 					"discriminator.py ";
-		String s2 = "cd AiTest,"+
+		String s2 = "cd,"+//"cd AiTest,"+
 					""+
 					"generator.py ";
 		

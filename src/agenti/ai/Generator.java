@@ -1,7 +1,9 @@
 package agenti.ai;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,6 +20,7 @@ import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
+import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import dto.ContractNetDTO;
 import jms.JMSQueue;
@@ -171,7 +174,17 @@ public class Generator extends Agent {
 			        "echo password | python script.py '" + packet.toString() + "'"
 			    };*/
 			try {
-				Runtime.getRuntime().exec(cmd);
+				//Runtime.getRuntime().exec({"cmd.exe", "cd AiTest"});
+				ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "cd \"C:\\Users\\ilija\\AiTest\" && generator.py");
+			        builder.redirectErrorStream(true);
+			        Process p = builder.start();
+			        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			        String line;
+			        while (true) {
+			            line = r.readLine();
+			            if (line == null) { break; }
+			            System.out.println("CMD-SHIT---"+line);
+			        }
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
