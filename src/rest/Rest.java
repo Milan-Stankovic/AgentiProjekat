@@ -210,20 +210,13 @@ public class Rest implements RestRemote {
 	}
 	
 	private void hardCodeAI() {
-		final AgentType tip2 = new AgentType();
-		tip2.setModule("EJB");
-		tip2.setName("Generator");
-		baza.insertAgentType(tip2);
-		Generator gen = new Generator();
-		gen.setAid(new AID("GeneratorAI", baza.getLokalniCentar(), tip2));
-		ArrayList<Agent> agents = new ArrayList<>();
-		agents.add(gen);
-		ArrayList<AgentInterface> ai = (ArrayList<AgentInterface>) this.getInterfaces((ArrayList) agents);
-		baza.addAllAgents(ai);
+		startAgent("Generator", "AIGEN");
+
+		AID gen = baza.getAgentByType("Generator").get(0);
 		
 		ACLPoruka nova = new ACLPoruka();
 		nova.setContentObj(1);
-		nova.setReceivers(new AID[] {gen.getAid()});
+		nova.setReceivers(new AID[] {gen});
 		nova.setConversationID("ConvoIdAI");
 		HashMap<String, Object> temp = new HashMap<>();
 		
