@@ -1,7 +1,10 @@
 package agenti.ai;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
@@ -74,7 +77,9 @@ private int broj_generacija=-1;
 				e.printStackTrace();
 			} 
 			
-			File actualFile = new File ((File)poruka.getContentObj(), saveLoc);
+			String preneseno = (String) poruka.getContentObj();
+			writeFile(preneseno, saveLoc);
+			
 			
 			System.out.println("SACUVAO");
 			
@@ -195,7 +200,7 @@ private int broj_generacija=-1;
 									next2.setSender(thisAid);
 									next2.setReceivers(new AID[] { generator });
 									next2.setPerformative(Performative.RETURNRESULTDISCRIMINATOR);
-									next2.setContentObj(new File(temp.getOntology())); // CEO FAJL DOBIJAS AKO OVO NE RADI, JEDAN SKIP
+									next2.setContentObj(readFile(temp.getOntology())); // CEO FAJL DOBIJAS AKO OVO NE RADI, JEDAN SKIP
 									next2.setConversationID(temp.getConversationID());
 									System.out.println("SALJEM DALJE");
 									broj_generacija--;
@@ -229,4 +234,50 @@ private int broj_generacija=-1;
 	}
 	
 }
+	private String readFile(String path) {
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader(path));
+		    StringBuilder sb = new StringBuilder();
+		    String line = br.readLine();
+
+		    while (line != null) {
+		        sb.append(line);
+		        sb.append(System.lineSeparator());
+		        line = br.readLine();
+		    }
+		    String everything = sb.toString();
+		    br.close();
+		    return sb.toString();
+		}catch (Exception e) {
+			System.out.println("Error while loading config.txt or Error while loading IP adress.");
+			return null;
+		}
+		
+		
+
+		    
+	}
+	
+	private void writeFile(String write, String path) {
+		BufferedWriter writer = null;
+        try {
+            //create a temporary file
+            File logFile = new File(path);
+
+            // This will output the full path where the file will be written to...
+            System.out.println(logFile.getCanonicalPath());
+
+            writer = new BufferedWriter(new FileWriter(logFile));
+            writer.write(write);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // Close the writer regardless of what happens...
+                writer.close();
+            } catch (Exception e) {
+            }
+        }
+	}
 }
