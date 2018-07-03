@@ -240,11 +240,11 @@ public class Rest implements RestRemote {
 		String sav3 = "C:\\Users\\ilija\\AiTest\\output";
 		String sav4 = "C:\\Users\\milan\\AiTest\\output";
 		temp.put("DIS_LOC", s1);
-		temp.put("DIS_RES_LOC", sav2);
-		temp.put("DIS_SAVE_LOC", sav4);
+		temp.put("DIS_RES_LOC", sav4);
+		temp.put("DIS_SAVE_LOC", sav2);
 		temp.put("GEN_LOC", s2);
-		temp.put("GEN_RES_LOC", sav1);
-		temp.put("GEN_SAVE_LOC", sav3);
+		temp.put("GEN_RES_LOC", sav3);
+		temp.put("GEN_SAVE_LOC", sav1);
 		
 		nova.setUserArgs(temp);
 		nova.setPerformative(Performative.STARTAI);
