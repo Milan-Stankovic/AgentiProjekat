@@ -237,7 +237,7 @@ public class StartServer {
 		try{
 			AgentskiCentar agentskiCentar = db.getLokalniCentar();
 			for (AgentskiCentar ac : db.getAgentskiCentri()){
-				if (!ac.getAddress().equals(agentskiCentar.getAddress())){
+				if (!ac.getAddress().trim().equals(agentskiCentar.getAddress().trim())){
 					
 					AgentskiCentar checked = heartbeat(ac);
 					if (checked == null){
