@@ -444,11 +444,7 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 		
 		console.log(poruka);
 
-		if ($scope.aktivanWs) {
-			
-    		sendACLMessage(poruka);	  
-    		
-    	} else {
+		
     		
 			$http({
 			  method: 'POST',
@@ -461,7 +457,7 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 			  }, function errorCallback(response) {
 				console.log('Greska kod slanja poruke');
 			  });
-    	}
+    	
 	}
     
     $scope.reset = function(selectedPerform, selectedSender, selectedReceivers, replyTo, content, language, encoding, ontology, protocol, convId, replyWith, replyBy){
@@ -506,7 +502,7 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 			}
 		}
 		
-		
+		if(!$scope.$$phase) 
       	  $scope.$apply($scope.receivers);
       	
 		
