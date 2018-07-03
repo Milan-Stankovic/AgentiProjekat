@@ -103,7 +103,7 @@ private int broj_generacija=-1;
 			generator=poruka.getSender();
 			ontology=poruka.getOntology();
 			broj_generacija=(int)poruka.getContentObj();
-			saveLoc=poruka.getLanguage();
+			saveLoc=poruka.getEncoding(); // ENCODING RADI ZA ONT NE ZNAM
 			broj_max=broj_generacija;
 
 	
@@ -201,7 +201,7 @@ private int broj_generacija=-1;
 									next2.setReceivers(new AID[] { generator });
 									next2.setPerformative(Performative.RETURNRESULTDISCRIMINATOR);
 									next2.setEncoding(readFile(temp.getOntology()+"/output.txt")); // CEO FAJL DOBIJAS AKO OVO NE RADI, JEDAN SKIP
-									next2.setConversationID(temp.getEncoding());
+									next2.setConversationID(temp.getEncoding()); // GRBA MOGUCE DA JE ONAJ ONTOLOGY PROBLEM :D
 									System.out.println("SALJEM DALJE");
 									broj_generacija--;
 									//GRBA SALJI PORUKU
