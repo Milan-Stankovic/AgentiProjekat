@@ -114,6 +114,7 @@ public class Generator extends Agent {
 				temp.setOntology((String)poruka.getUserArgs().get("DIS_RES_LOC"));
 				temp.setLanguage((String)poruka.getUserArgs().get("DIS_SAVE_LOC"));
 				temp.setContentObj(broj_generacija);
+				temp.setConversationID(poruka.getConversationID());
 				//DODAJ AKO NESTO FALI
 				
 
@@ -121,6 +122,7 @@ public class Generator extends Agent {
 				next.setSender(this.aid);
 				next.setReceivers(new AID[] { this.aid });
 				next.setPerformative(Performative.STARTGAN);
+				next.setConversationID(poruka.getConversationID());
 				next.setProtocol((String)poruka.getUserArgs().get("GEN_LOC"));// OVDE CE BITI STRING ZA LOKACIJU PY-a
 				next.setOntology((String)poruka.getUserArgs().get("GEN_RES_LOC")); // LOKACIJA TEXT FILE-a
 				next.setLanguage((String)poruka.getUserArgs().get("GEN_SAVE_LOC")); // LOKACIJA FILE IZ KOJE PY CITA
@@ -155,6 +157,8 @@ public class Generator extends Agent {
 			next.setPerformative(Performative.RETURNRESULTGENERATOR);
 			next.setOntology(poruka.getOntology());
 			next.setLanguage(poruka.getLanguage());
+			next.setConversationID(poruka.getConversationID());
+			
 			new JMSQueue(next);
 			
 			
@@ -203,6 +207,7 @@ public class Generator extends Agent {
 			next.setPerformative(Performative.RETURNRESULTGENERATOR);
 			next.setOntology(poruka.getOntology());
 			next.setLanguage(poruka.getLanguage());
+			next.setConversationID(poruka.getConversationID());
 	
 			
 			new JMSQueue(next);
@@ -220,12 +225,13 @@ public class Generator extends Agent {
 				next.setSender(this.aid);
 				next.setReceivers(new AID[] { this.aid });
 				next.setPerformative(Performative.ENDGAN);
-				
+				next.setConversationID(poruka.getConversationID());
 				
 				ACLPoruka next2 = new ACLPoruka();
 				next2.setSender(this.aid);
 				next2.setReceivers(new AID[] { diskriminator });
 				next2.setPerformative(Performative.ENDGAN);
+				next2.setConversationID(poruka.getConversationID());
 				System.out.println("KRAJ");
 				
 				
@@ -273,6 +279,7 @@ public class Generator extends Agent {
 									next2.setReceivers(new AID[] { diskriminator });
 									next2.setPerformative(Performative.RETURNRESULTGENERATOR);
 									next2.setContentObj(new File(temp.getOntology())); // CEO FAJL DOBIJAS
+									next2.setConversationID(temp.getConversationID());
 									System.out.println("SALJEM DALJE");
 									broj_generacija--;
 									//GRBA SALJI PORUKU
