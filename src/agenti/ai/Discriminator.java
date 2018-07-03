@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
+import javax.inject.Inject;
 
 import dto.ContractNetDTO;
 import jms.JMSQueue;
@@ -27,6 +28,7 @@ import model.AgentInterface;
 import model.Baza;
 import model.Performative;
 
+@Remote(AgentInterface.class)
 @Stateful
 public class Discriminator extends Agent{
 
@@ -39,7 +41,7 @@ private int broj_generacija=-1;
 	private int broj_max = -1;
 	
 
-	@EJB
+	@Inject
 	private Baza baza;
 
 	

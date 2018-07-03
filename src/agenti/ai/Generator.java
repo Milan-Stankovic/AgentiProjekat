@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
+import javax.inject.Inject;
 
 import dto.ContractNetDTO;
 import jms.JMSQueue;
@@ -27,6 +28,7 @@ import model.AgentInterface;
 import model.Baza;
 import model.Performative;
 
+@Remote(AgentInterface.class)
 @Stateful
 public class Generator extends Agent {
 
@@ -38,7 +40,7 @@ public class Generator extends Agent {
 	private String saveLoc = "";
 	
 
-	@EJB
+	@Inject
 	private Baza baza;
 
 	
@@ -68,16 +70,23 @@ public class Generator extends Agent {
 			
 			HashMap<AID, AgentInterface> agenti = baza.getAgenti();
 			
+			System.out.println("Prosla baza u gene");
+			
 			ArrayList<AID> receivers = new ArrayList<>();
 			
 			for(Map.Entry<AID, AgentInterface> entry : agenti.entrySet()) {
+				
+				System.out.println("--- Nasao agenta : " + entry.getKey());
 				
 				AID key = entry.getKey();
 			    
 		
 
-				if(key.getType().getName().equals("Discriminator"))
+				if(key.getType().getName().equals("Discriminator")) {
 					receivers.add(key);
+					System.out.println("!!!NASAO DISKRIMINATORA!!!");
+				}
+					
 			 
 				if(receivers.size()==0) {
 					System.out.println("NEMA Diskriminatora");
@@ -87,6 +96,8 @@ public class Generator extends Agent {
 			
 			
 			if(b) {
+				
+				System.out.println("USAO U IF !");
 				
 				AID[] r = new AID[1];
 				r[0] = receivers.get(0);
