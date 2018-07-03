@@ -156,7 +156,21 @@ public class WebSocket implements WebSocketRemote {
 						case PORUKA: 
 								
 							ACLPoruka poruka = (ACLPoruka) ws.getObject();
-							agentskiCentar.sendMessage(poruka);
+							//agentskiCentar.sendMessage(poruka);
+							
+							OdlazniWsDTO odlaznaPoruka = new OdlazniWsDTO();
+							odlaznaPoruka.setTip(TipWs.PORUKA);
+							odlaznaPoruka.setIme(poruka.toString());
+							
+						try {
+							s.getBasicRemote().sendObject(odlaznaPoruka);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (EncodeException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 							break;
 							
 						default: 

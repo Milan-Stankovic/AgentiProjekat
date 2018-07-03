@@ -2,6 +2,8 @@ var app = angular.module('app', []);
 
 app.controller('klijentController', function($scope, $http, $timeout, $interval) {
 
+	
+	$scope.aclPoruke = [];
 	$scope.aktivanWs = false;
 	
 	if ("WebSocket" in window) {
@@ -170,6 +172,12 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 					$scope.performatives = odlazni.objekti;
 					
 					refresh();
+					
+					break;
+				case 'PORUKA':
+					
+					$scope.aclPoruke.push(odlazni.ime);
+					$scope.$apply($scope.aclPoruke);
 					
 					break;
 				case 'TYPE':
