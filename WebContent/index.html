@@ -19,14 +19,14 @@
 	<nav>
    		<h3>Active agents : <h3>
 		
-		<div ng-repeat="agent in activeAgents">
+		<div ng-repeat="agent in activeAgents track by $index">
 			<p > {{agent.aid.name}}</p>
 		</div>
 		
 	
 
    		<h3>All agent types : <h3>
-   		<div ng-repeat="tip in tipovi">
+   		<div ng-repeat="tip in tipovi track by $index">
    			<button type="submit" style="float: right !important;" ng-click="activate(tip)" class="btn btn-primary"   >
                 <img class="clearDelete" src="activate.png" width="15" height="15" title="Add" alt="submit" />
             </button>
@@ -79,7 +79,7 @@
 
 <footer>
   <p>Messages :</p>
-  <div ng-repeat="poruka in aclPoruke">
+  <div ng-repeat="poruka in aclPoruke track by $index">
    		<p>{{poruka}}</p>
 	</div>
 </footer>
