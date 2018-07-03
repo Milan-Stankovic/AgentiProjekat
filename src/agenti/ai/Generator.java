@@ -87,11 +87,11 @@ public class Generator extends Agent {
 					System.out.println("!!!NASAO DISKRIMINATORA!!!");
 				}
 					
-			 
-				if(receivers.size()==0) {
-					System.out.println("NEMA Diskriminatora");
-					b=false;
-				}
+			}
+			
+			if(receivers.size()==0) {
+				System.out.println("NEMA Diskriminatora");
+				b=false;
 			}
 			
 			
