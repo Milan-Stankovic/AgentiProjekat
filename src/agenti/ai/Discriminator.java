@@ -41,6 +41,9 @@ private int broj_generacija=-1;
 	
 	private int broj_max = -1;
 	
+	private String ontology="";
+
+	
 
 	@Inject
 	private Baza baza;
@@ -54,12 +57,15 @@ private int broj_generacija=-1;
 
 	@Override
 	public void handleMessage(ACLPoruka poruka) {
-		boolean b = true;
 		
 		if (poruka.getPerformative().equals(Performative.ENDGAN)) {
 			System.out.println("END GAN");
 		}else if (poruka.getPerformative().equals(Performative.RETURNRESULTGENERATOR)) {
-		
+			
+			System.out.println("*****USAO U DISKRIMINATOR RETURNRESULTGENERATOR*****");
+			
+			System.out.println(saveLoc);
+			
 			File f = new File(saveLoc);
 			try {
 				Files.deleteIfExists(f.toPath());
@@ -76,8 +82,9 @@ private int broj_generacija=-1;
 			next.setSender(this.aid);
 			next.setReceivers(new AID[] { this.aid });
 			next.setPerformative(Performative.RETURNRESULTDISCRIMINATOR);
-			next.setOntology(poruka.getOntology());
-			next.setLanguage(poruka.getLanguage());
+			next.setOntology(ontology);
+			next.setLanguage(saveLoc);
+			next.setConversationID(poruka.getConversationID());
 	
 			
 			new JMSQueue(next);
@@ -87,29 +94,13 @@ private int broj_generacija=-1;
 		}else if (poruka.getPerformative().equals(Performative.STARTGAN)) {
 			
 			System.out.println("STARTUJE GAN U GENERATORU");
-		
-			
-		/*	temp.setProtocol((String)poruka.getUserArgs().get("DIS_LOC")); // OVDE CE BITI STRING ZA LOKACIJU PYa
-			temp.setConversationID(poruka.getConversationID());
-			temp.setPerformative(Performative.STARTGAN); // TODO DA LI JE STARTGAN ILI STARTAI
-			temp.setOntology((String)poruka.getUserArgs().get("DIS_RES_LOC"));
-			temp.setLanguage((String)poruka.getUserArgs().get("DIS_SAVE_LOC"));
-			*/
+
 			generator=poruka.getSender();
-			
+			ontology=poruka.getOntology();
 			broj_generacija=(int)poruka.getContentObj();
 			saveLoc=poruka.getLanguage();
 			broj_max=broj_generacija;
-			
-		/*
-		
-			ACLPoruka next = new ACLPoruka();
-			next.setSender(this.aid);
-			next.setReceivers(new AID[] { this.aid });
-			next.setPerformative(Performative.RETURNRESULTDISCRIMINATOR);
-			next.setOntology(poruka.getOntology());
-			next.setLanguage(poruka.getLanguage());
-			*/
+
 	
 			System.out.println("POCEO GAN");
 			
@@ -152,12 +143,14 @@ private int broj_generacija=-1;
 				next.setSender(this.aid);
 				next.setReceivers(new AID[] { this.aid });
 				next.setPerformative(Performative.ENDGAN);
+				next.setConversationID(poruka.getConversationID());
 				
 				
 				ACLPoruka next2 = new ACLPoruka();
 				next2.setSender(this.aid);
 				next2.setReceivers(new AID[] { generator });
 				next2.setPerformative(Performative.ENDGAN);
+				next2.setConversationID(poruka.getConversationID());
 				System.out.println("KRAJ");
 				
 				
@@ -173,13 +166,15 @@ private int broj_generacija=-1;
 				
 				final AID thisAid = this.aid;
 				
+				final String ont = ontology;
+				
 				Thread t = new Thread() {
 		            @Override
 		            public void run() {
 		            	try {
 		            	
 		            	WatchService watcher = FileSystems.getDefault().newWatchService();
-						Path dir = Paths.get(temp.getOntology());
+						Path dir = Paths.get(ont);
 						WatchKey key = dir.register(watcher, StandardWatchEventKinds.ENTRY_MODIFY, StandardWatchEventKinds.ENTRY_CREATE);
 		            	
 		            	boolean next = false;
@@ -201,6 +196,7 @@ private int broj_generacija=-1;
 									next2.setReceivers(new AID[] { generator });
 									next2.setPerformative(Performative.RETURNRESULTDISCRIMINATOR);
 									next2.setContentObj(new File(temp.getOntology())); // CEO FAJL DOBIJAS AKO OVO NE RADI, JEDAN SKIP
+									next2.setConversationID(temp.getConversationID());
 									System.out.println("SALJEM DALJE");
 									broj_generacija--;
 									//GRBA SALJI PORUKU
