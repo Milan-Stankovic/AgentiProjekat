@@ -27,10 +27,8 @@ import model.Performative;
 
 public class Generator extends Agent {
 
+	private int broj_generacija=-1;
 	
-	private int broj_batcheva=-1;
-	
-	private long lastModified = -1;
 	
 	private AID diskriminator;
 	
@@ -53,7 +51,7 @@ public class Generator extends Agent {
 		
 		if(poruka.getPerformative().equals(Performative.STARTAI)) {
 			
-			broj_batcheva=(int)poruka.getContentObj();
+			broj_generacija=(int)poruka.getContentObj();
 			
 			
 			
@@ -73,13 +71,13 @@ public class Generator extends Agent {
 				
 				AID key = entry.getKey();
 			    
-				AgentInterface value = entry.getValue();
+		
 
-				if(key.getType().getName().equals("DISKRIMINATOR"))
+				if(key.getType().getName().equals("Discriminator"))
 					receivers.add(key);
 			 
 				if(receivers.size()==0) {
-					System.out.println("NEMA DISKRIMINATORA");
+					System.out.println("NEMA Diskriminatora");
 					b=false;
 				}
 			}
@@ -95,14 +93,13 @@ public class Generator extends Agent {
 				
 				temp.setProtocol((String)poruka.getUserArgs().get("DIS_LOC")); // OVDE CE BITI STRING ZA LOKACIJU PYa
 				temp.setConversationID(poruka.getConversationID());
-				temp.setPerformative(Performative.STARTAI);
+				temp.setPerformative(Performative.STARTGAN); // TODO DA LI JE STARTGAN ILI STARTAI
 				temp.setOntology((String)poruka.getUserArgs().get("DIS_RES_LOC"));
 				temp.setLanguage((String)poruka.getUserArgs().get("DIS_SAVE_LOC"));
+				temp.setContentObj(broj_generacija);
 				//DODAJ AKO NESTO FALI
 				
-				
-				ContractNetDTO cdto = new ContractNetDTO();
-				
+
 				ACLPoruka next = new ACLPoruka();
 				next.setSender(this.aid);
 				next.setReceivers(new AID[] { this.aid });
@@ -112,7 +109,7 @@ public class Generator extends Agent {
 				next.setLanguage((String)poruka.getUserArgs().get("GEN_SAVE_LOC")); // LOKACIJA FILE IZ KOJE PY CITA
 				saveLoc= (String)poruka.getUserArgs().get("GEN_SAVE_LOC");
 				
-				System.out.println("DALJE");
+				System.out.println("DALJE GAN");
 				
 				new JMSQueue(next);
 				new JMSQueue(temp);
@@ -134,6 +131,15 @@ public class Generator extends Agent {
 			} 
 			
 			File actualFile = new File ((File)poruka.getContentObj(), saveLoc);
+			
+			ACLPoruka next = new ACLPoruka();
+			next.setSender(this.aid);
+			next.setReceivers(new AID[] { this.aid });
+			next.setPerformative(Performative.RETURNRESULTGENERATOR);
+			next.setOntology(poruka.getOntology());
+			next.setLanguage(poruka.getLanguage());
+			new JMSQueue(next);
+			
 			
 			System.out.println("SACUVAO");
 			
@@ -165,12 +171,15 @@ public class Generator extends Agent {
 			next.setOntology(poruka.getOntology());
 			next.setLanguage(poruka.getLanguage());
 	
+			
+			new JMSQueue(next);
+			
 			System.out.println("POCEO GAN");
 			
 			
 		}else if (poruka.getPerformative().equals(Performative.RETURNRESULTGENERATOR)) {
 			
-			if(broj_batcheva==0) {
+			if(broj_generacija==0) {
 				
 				ACLPoruka next = new ACLPoruka();
 				next.setSender(this.aid);
@@ -191,54 +200,70 @@ public class Generator extends Agent {
 			
 			}
 			
+			else {
 			
-			try {
-				WatchService watcher = FileSystems.getDefault().newWatchService();
-				Path dir = Paths.get(poruka.getOntology());
-				WatchKey key = dir.register(watcher, StandardWatchEventKinds.ENTRY_MODIFY, StandardWatchEventKinds.ENTRY_CREATE);
+				final ACLPoruka temp = poruka;
 				
-				boolean next = false;
-				while(true) {
-					
-					if(next)
-						break;
-					
-					for(WatchEvent<?> event : key.pollEvents()) {
-						
-						if(event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
-							System.out.println("TEK SE SADA KREIRAO FAJL");
-						}else {
+				final AID thisAid = this.aid;
+				
+				Thread t = new Thread() {
+		            @Override
+		            public void run() {
+		            	try {
+		            	
+		            	WatchService watcher = FileSystems.getDefault().newWatchService();
+						Path dir = Paths.get(temp.getOntology());
+						WatchKey key = dir.register(watcher, StandardWatchEventKinds.ENTRY_MODIFY, StandardWatchEventKinds.ENTRY_CREATE);
+		            	
+		            	boolean next = false;
+		            	
+		            	while(true) {
 							
+							if(next)
+								break;
+							
+							for(WatchEvent<?> event : key.pollEvents()) {
+								
+								if(event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
+									System.out.println("TEK SE SADA KREIRAO FAJL");
+								}else {
+									
 
-							ACLPoruka next2 = new ACLPoruka();
-							next2.setSender(this.aid);
-							next2.setReceivers(new AID[] { diskriminator });
-							next2.setPerformative(Performative.ENDGAN);
-							next2.setContentObj(new File(poruka.getOntology())); // CEO FAJL DOBIJAS
-							System.out.println("SALJEM DALJE");
-							
-							//GRBA SALJI PORUKU
-							new JMSQueue(next2);
-							next= true; 
-							break;
+									ACLPoruka next2 = new ACLPoruka();
+									next2.setSender(thisAid);
+									next2.setReceivers(new AID[] { diskriminator });
+									next2.setPerformative(Performative.RETURNRESULTGENERATOR);
+									next2.setContentObj(new File(temp.getOntology())); // CEO FAJL DOBIJAS
+									System.out.println("SALJEM DALJE");
+									broj_generacija--;
+									//GRBA SALJI PORUKU
+									new JMSQueue(next2);
+									next= true; 
+									break;
+									
+								}
+								
+							}
 							
 						}
-						
-					}
-					
-				}
-				
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		            	
+		            	} catch (IOException e) {
+		    				// TODO Auto-generated catch block
+		    				e.printStackTrace();
+		    			}
+		            	
+		            }
+		        };
+
+		        t.start();
+
+		}
 			
 				
 			
 		}
 		
 	}
-	
+
 	
 }

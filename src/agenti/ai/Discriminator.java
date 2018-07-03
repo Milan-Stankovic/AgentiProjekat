@@ -27,13 +27,13 @@ import model.Performative;
 
 public class Discriminator extends Agent{
 
-private int broj_batcheva=-1;
-	
-	private long lastModified = -1;
+private int broj_generacija=-1;
 	
 	private AID generator;
 	
 	private String saveLoc = "";
+	
+	private int broj_max = -1;
 	
 
 	@EJB
@@ -50,77 +50,7 @@ private int broj_batcheva=-1;
 	public void handleMessage(ACLPoruka poruka) {
 		boolean b = true;
 		
-		if(poruka.getPerformative().equals(Performative.STARTAI)) {
-			
-			broj_batcheva=(int)poruka.getContentObj();
-			
-			
-			
-			System.out.println("START GAN");
-			
-			ACLPoruka temp = new ACLPoruka();
-			
-			temp.setContent("POCNI GAN");
-			temp.setSender(this.getAid());
-			
-			
-			HashMap<AID, AgentInterface> agenti = baza.getAgenti();
-			
-			ArrayList<AID> receivers = new ArrayList<>();
-			
-			for(Map.Entry<AID, AgentInterface> entry : agenti.entrySet()) {
-				
-				AID key = entry.getKey();
-			    
-				AgentInterface value = entry.getValue();
-
-				if(key.getType().getName().equals("GENERATOR"))
-					receivers.add(key);
-			 
-				if(receivers.size()==0) {
-					System.out.println("NEMA GENERATORA");
-					b=false;
-				}
-			}
-			
-			
-			if(b) {
-				
-				AID[] r = new AID[1];
-				r[0] = receivers.get(0);
-				generator=receivers.get(0);
-				
-				temp.setReceivers(r);
-				
-				temp.setProtocol((String)poruka.getUserArgs().get("DIS_LOC")); // OVDE CE BITI STRING ZA LOKACIJU PYa
-				temp.setConversationID(poruka.getConversationID());
-				temp.setPerformative(Performative.STARTAI);
-				temp.setOntology((String)poruka.getUserArgs().get("DIS_RES_LOC"));
-				temp.setLanguage((String)poruka.getUserArgs().get("DIS_SAVE_LOC"));
-				//DODAJ AKO NESTO FALI
-				
-				
-				ContractNetDTO cdto = new ContractNetDTO();
-				
-				ACLPoruka next = new ACLPoruka();
-				next.setSender(this.aid);
-				next.setReceivers(new AID[] { this.aid });
-				next.setPerformative(Performative.STARTGAN);
-				next.setProtocol((String)poruka.getUserArgs().get("GEN_LOC"));// OVDE CE BITI STRING ZA LOKACIJU PY-a
-				next.setOntology((String)poruka.getUserArgs().get("GEN_RES_LOC")); // LOKACIJA TEXT FILE-a
-				next.setLanguage((String)poruka.getUserArgs().get("GEN_SAVE_LOC")); // LOKACIJA FILE IZ KOJE PY CITA
-				saveLoc= (String)poruka.getUserArgs().get("GEN_SAVE_LOC");
-				
-				System.out.println("DALJE");
-				
-				new JMSQueue(next);
-				new JMSQueue(temp);
-				//da li sam trebao obe da saljem?
-		
-			}
-			
-			
-		}else if (poruka.getPerformative().equals(Performative.ENDGAN)) {
+		if (poruka.getPerformative().equals(Performative.ENDGAN)) {
 			System.out.println("END GAN");
 		}else if (poruka.getPerformative().equals(Performative.RETURNRESULTGENERATOR)) {
 		
@@ -136,26 +66,36 @@ private int broj_batcheva=-1;
 			
 			System.out.println("SACUVAO");
 			
+			ACLPoruka next = new ACLPoruka();
+			next.setSender(this.aid);
+			next.setReceivers(new AID[] { this.aid });
+			next.setPerformative(Performative.RETURNRESULTDISCRIMINATOR);
+			next.setOntology(poruka.getOntology());
+			next.setLanguage(poruka.getLanguage());
+	
+			
+			new JMSQueue(next);
+			
+			
 
 		}else if (poruka.getPerformative().equals(Performative.STARTGAN)) {
 			
 			System.out.println("STARTUJE GAN U GENERATORU");
 		
 			
-			String[] cmd = poruka.getProtocol().split(",");
-					
-					/*{
-			        "/bin/bash",
-			        "-c",
-			        "echo password | python script.py '" + packet.toString() + "'"
-			    };*/
-			try {
-				Runtime.getRuntime().exec(cmd);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		/*	temp.setProtocol((String)poruka.getUserArgs().get("DIS_LOC")); // OVDE CE BITI STRING ZA LOKACIJU PYa
+			temp.setConversationID(poruka.getConversationID());
+			temp.setPerformative(Performative.STARTGAN); // TODO DA LI JE STARTGAN ILI STARTAI
+			temp.setOntology((String)poruka.getUserArgs().get("DIS_RES_LOC"));
+			temp.setLanguage((String)poruka.getUserArgs().get("DIS_SAVE_LOC"));
+			*/
+			generator=poruka.getSender();
 			
+			broj_generacija=(int)poruka.getContentObj();
+			saveLoc=poruka.getLanguage();
+			broj_max=broj_generacija;
+			
+		
 		
 			ACLPoruka next = new ACLPoruka();
 			next.setSender(this.aid);
@@ -167,9 +107,24 @@ private int broj_batcheva=-1;
 			System.out.println("POCEO GAN");
 			
 			
-		}else if (poruka.getPerformative().equals(Performative.RETURNRESULTGENERATOR)) {
+		}else if (poruka.getPerformative().equals(Performative.RETURNRESULTDISCRIMINATOR)) {
 			
-			if(broj_batcheva==0) {
+			if(broj_max==broj_generacija) {
+				String[] cmd = poruka.getProtocol().split(",");
+						/*{
+				        "/bin/bash",
+				        "-c",
+				        "echo password | python script.py '" + packet.toString() + "'"
+				    };*/
+				try {
+					Runtime.getRuntime().exec(cmd);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(broj_generacija==0) {
 				
 				ACLPoruka next = new ACLPoruka();
 				next.setSender(this.aid);
@@ -190,48 +145,64 @@ private int broj_batcheva=-1;
 			
 			}
 			
+			else {
 			
-			try {
-				WatchService watcher = FileSystems.getDefault().newWatchService();
-				Path dir = Paths.get(poruka.getOntology());
-				WatchKey key = dir.register(watcher, StandardWatchEventKinds.ENTRY_MODIFY, StandardWatchEventKinds.ENTRY_CREATE);
+				final ACLPoruka temp = poruka;
 				
-				boolean next = false;
-				while(true) {
-					
-					if(next)
-						break;
-					
-					for(WatchEvent<?> event : key.pollEvents()) {
-						
-						if(event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
-							System.out.println("TEK SE SADA KREIRAO FAJL");
-						}else {
+				final AID thisAid = this.aid;
+				
+				Thread t = new Thread() {
+		            @Override
+		            public void run() {
+		            	try {
+		            	
+		            	WatchService watcher = FileSystems.getDefault().newWatchService();
+						Path dir = Paths.get(temp.getOntology());
+						WatchKey key = dir.register(watcher, StandardWatchEventKinds.ENTRY_MODIFY, StandardWatchEventKinds.ENTRY_CREATE);
+		            	
+		            	boolean next = false;
+		            	
+		            	while(true) {
 							
+							if(next)
+								break;
+							
+							for(WatchEvent<?> event : key.pollEvents()) {
+								
+								if(event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
+									System.out.println("TEK SE SADA KREIRAO FAJL");
+								}else {
+									
 
-							ACLPoruka next2 = new ACLPoruka();
-							next2.setSender(this.aid);
-							next2.setReceivers(new AID[] { generator });
-							next2.setPerformative(Performative.ENDGAN);
-							next2.setContentObj(new File(poruka.getOntology())); // CEO FAJL DOBIJAS
-							System.out.println("SALJEM DALJE");
-							
-							//GRBA SALJI PORUKU
-							new JMSQueue(next2);
-							next= true; 
-							break;
+									ACLPoruka next2 = new ACLPoruka();
+									next2.setSender(thisAid);
+									next2.setReceivers(new AID[] { generator });
+									next2.setPerformative(Performative.RETURNRESULTDISCRIMINATOR);
+									next2.setContentObj(new File(temp.getOntology())); // CEO FAJL DOBIJAS AKO OVO NE RADI, JEDAN SKIP
+									System.out.println("SALJEM DALJE");
+									broj_generacija--;
+									//GRBA SALJI PORUKU
+									new JMSQueue(next2);
+									next= true; 
+									break;
+									
+								}
+								
+							}
 							
 						}
-						
-					}
-					
-				}
-				
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		            	
+		            	} catch (IOException e) {
+		    				// TODO Auto-generated catch block
+		    				e.printStackTrace();
+		    			}
+		            	
+		            }
+		        };
+
+		        t.start();
+			
+		}
 			
 				
 			
