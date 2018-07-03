@@ -98,7 +98,7 @@ private int broj_generacija=-1;
 
 		}else if (poruka.getPerformative().equals(Performative.STARTGAN)) {
 			
-			System.out.println("STARTUJE GAN U GENERATORU");
+			System.out.println("STARTUJE GAN U GENERATORU"+poruka);
 
 			generator=poruka.getSender();
 			ontology=poruka.getOntology();

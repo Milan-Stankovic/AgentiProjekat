@@ -111,16 +111,21 @@ public class Generator extends Agent {
 				diskriminator=receivers.get(0);
 				
 				temp.setReceivers(r);
-				
+				temp.setEncoding((String)poruka.getUserArgs().get("DIS_SAVE_LOC"));
+				System.out.println("SYSOOOO ENCODING: "+temp.getEncoding());
+				temp.setOntology(((String)poruka.getUserArgs().get("DIS_SAVE_LOC")));
+				System.out.println("SYSOOOO ENCODING: "+temp.getOntology());
 				temp.setProtocol((String)poruka.getUserArgs().get("DIS_LOC")); // OVDE CE BITI STRING ZA LOKACIJU PYa
 				temp.setConversationID(poruka.getConversationID());
 				temp.setPerformative(Performative.STARTGAN); // TODO DA LI JE STARTGAN ILI STARTAI
 				temp.setOntology((String)poruka.getUserArgs().get("DIS_RES_LOC"));
 				temp.setLanguage((String)poruka.getUserArgs().get("DIS_SAVE_LOC"));
+				System.out.println("SYSOOOO: "+temp.getLanguage());
 				temp.setContentObj(broj_generacija);
 				temp.setConversationID(poruka.getConversationID());
-				//DODAJ AKO NESTO FALI
 				
+				//DODAJ AKO NESTO FALI
+				new JMSQueue(temp);
 
 				ACLPoruka next = new ACLPoruka();
 				next.setSender(this.aid);
@@ -135,7 +140,7 @@ public class Generator extends Agent {
 				System.out.println("DALJE GAN");
 				
 				new JMSQueue(next);
-				new JMSQueue(temp);
+				
 				//da li sam trebao obe da saljem?
 		
 			}
