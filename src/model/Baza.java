@@ -43,6 +43,18 @@ public class Baza implements Serializable{
 	private AgentskiCentar lokalniCentar; // Grba tu mi postavi na pocetku trenutni centar
 	
 	private String masterIp = ""; // Kada budemo testirali 
+	
+	private ACLPoruka aiTest;
+	
+	
+
+	public ACLPoruka getAiTest() {
+		return aiTest;
+	}
+
+	public void setAiTest(ACLPoruka aiTest) {
+		this.aiTest = aiTest;
+	}
 
 	public void sendActiveToSocket() throws IOException, EncodeException{
 		System.out.println("WS DODAJEM");

@@ -14,6 +14,7 @@ import java.net.UnknownHostException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -32,9 +33,15 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
+import model.ACLPoruka;
+import model.AID;
+import model.Agent;
+import model.AgentInterface;
 import model.AgentType;
 import model.AgentskiCentar;
 import model.Baza;
+import model.Performative;
+import rest.Rest;
 
 @Startup
 @Singleton
@@ -43,6 +50,9 @@ public class StartServer {
 	@EJB
 	private Baza db;
 	
+	@EJB
+	private Rest rest;
+	
 	private String masterIp;
 	
 	private String currentIp;
@@ -50,6 +60,50 @@ public class StartServer {
 	private String curentHostname;
 	
 	private String alias;
+	
+	private void hardCodeAI(AgentType generator) {
+		Agent gen = new Agent(new AID("GeneratorAI", db.getLokalniCentar(), generator));
+		ArrayList<Agent> agents = new ArrayList<>();
+		agents.add(gen);
+		ArrayList<AgentInterface> ai = (ArrayList<AgentInterface>) rest.getInterfaces((ArrayList) agents);
+		db.addAllAgents(ai);
+		
+		ACLPoruka nova = new ACLPoruka();
+		nova.setContentObj(1);
+		nova.setReceivers(new AID[] {gen.getAid()});
+		nova.setConversationID("ConvoIdAI");
+		HashMap<String, Object> temp = new HashMap<>();
+		
+		/*
+		 * 
+			        "cd AiTest",
+			        "-c",
+			        "echo password | python script.py '" + packet.toString() + "'"
+			        */
+		String s1 = "/cd AiTest"+
+					""+
+					"read.py ";
+		String s2 = "/cd AiTest"+
+				""+
+				"write.py ";
+		
+		String sav1 = "C:\\Users\\ilija\\AiTest\\input.txt";
+		String sav2 = "C:\\Users\\milan\\AiTest\\input.txt";
+		String sav3 = "C:\\Users\\ilija\\AiTest\\output.txt";
+		String sav4 = "C:\\Users\\milan\\AiTest\\output.txt";
+		temp.put("DIS_LOC", s1);
+		temp.put("DIS_RES_LOC", sav2);
+		temp.put("DIS_SAVE_LOC", sav4);
+		temp.put("GEN_LOC", s2);
+		temp.put("GEN_RES_LOC", sav1);
+		temp.put("GEN_SAVE_LOC", sav3);
+		
+		nova.setUserArgs(temp);
+		nova.setPerformative(Performative.STARTAI);
+		
+		
+		db.setAiTest(nova);
+	}
 	
 	@PostConstruct
 	public void handshake() {
@@ -73,11 +127,21 @@ public class StartServer {
 				AgentType tip1 = new AgentType();
 				tip1.setModule("EJB");
 				tip1.setName("Pong");
+				AgentType tip2 = new AgentType();
+				tip2.setModule("EJB");
+				tip2.setName("Generator");
+				AgentType tip3 = new AgentType();
+				tip3.setModule("EJB");
+				tip3.setName("Discriminator");
 				ArrayList<AgentType> tipovi = new ArrayList<>();
 				tipovi.add(tip);
 				tipovi.add(tip1);
+				tipovi.add(tip2);
+				tipovi.add(tip3);
 				db.setTipovi(tipovi);
 
+				//zakomentarisi ako neces
+				hardCodeAI(tip2);
 				
 				System.out.println("Master node initiated. Prepare to be amazed.");
 			}

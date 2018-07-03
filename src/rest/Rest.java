@@ -87,7 +87,7 @@ public class Rest implements RestRemote {
 	}
 	
 	
-	private List<AgentInterface> getInterfaces(List<Agent> noviAgenti){
+	public List<AgentInterface> getInterfaces(List<Agent> noviAgenti){
 		ArrayList<AgentInterface> retVal = new ArrayList<AgentInterface>();
 		for (Agent a : noviAgenti) {
 			retVal.add(a);	
@@ -178,6 +178,13 @@ public class Rest implements RestRemote {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void sendMessage(ACLPoruka poruka) {
 		new JMSQueue(poruka);
+	}
+	
+	@GET
+	@Path("/messagesAI")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void sendMessageAI() {
+		new JMSQueue(baza.getAiTest());
 	}
 	
 	/*@GET
