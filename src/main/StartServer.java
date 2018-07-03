@@ -80,10 +80,10 @@ public class StartServer {
 			        "-c",
 			        "echo password | python script.py '" + packet.toString() + "'"
 			        */
-		String s1 = "/cd AiTest"+
+		String s1 = "/cd AiTest,"+
 					""+
 					"discriminator.py ";
-		String s2 = "/cd AiTest"+
+		String s2 = "/cd AiTest,"+
 					""+
 					"generator.py ";
 		
