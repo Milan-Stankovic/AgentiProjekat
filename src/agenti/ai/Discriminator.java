@@ -250,7 +250,7 @@ private int broj_generacija=-1;
 		    br.close();
 		    return sb.toString();
 		}catch (Exception e) {
-			System.out.println("Error while loading config.txt or Error while loading IP adress.");
+			System.out.println("Error while loading file on loacion: "+path);
 			return null;
 		}
 		
@@ -271,6 +271,7 @@ private int broj_generacija=-1;
             writer = new BufferedWriter(new FileWriter(logFile));
             writer.write(write);
         } catch (Exception e) {
+        	System.out.println("Error while writing file on loacion: "+path);
             e.printStackTrace();
         } finally {
             try {
