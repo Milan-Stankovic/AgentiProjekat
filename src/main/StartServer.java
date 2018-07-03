@@ -82,10 +82,10 @@ public class StartServer {
 			        */
 		String s1 = "/cd AiTest"+
 					""+
-					"read.py ";
+					"discriminator.py ";
 		String s2 = "/cd AiTest"+
-				""+
-				"write.py ";
+					""+
+					"generator.py ";
 		
 		String sav1 = "C:\\Users\\ilija\\AiTest\\input.txt";
 		String sav2 = "C:\\Users\\milan\\AiTest\\input.txt";
