@@ -220,17 +220,19 @@ public class Rest implements RestRemote {
 		nova.setConversationID("ConvoIdAI");
 		HashMap<String, Object> temp = new HashMap<>();
 		
-		/*
+		/* "cmd.exe", "/c", "cd \"C:\\Users\\ilija\\AiTest\" && generator.py"
 		 * 
 			        "cd AiTest",
 			        "-c",
 			        "echo password | python script.py '" + packet.toString() + "'"
 			        */
-		String s1 = "cd,"+//"cd AiTest,"+
-					""+
+		String s1 = "cmd.exe,"+
+					"/c,"+
+					"cd \"C:\\Users\\milan\\AiTest\" &&"+
 					"discriminator.py ";
-		String s2 = "cd,"+//"cd AiTest,"+
-					""+
+		String s2 = "cmd.exe,"+
+					"/c,"+
+					"cd \"C:\\Users\\ilija\\AiTest\" &&"+
 					"generator.py ";
 		
 		String sav1 = "C:\\Users\\ilija\\AiTest\\input.txt";

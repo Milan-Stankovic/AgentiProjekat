@@ -1,7 +1,9 @@
 package agenti.ai;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -122,7 +124,17 @@ private int broj_generacija=-1;
 				        "echo password | python script.py '" + packet.toString() + "'"
 				    };*/
 				try {
-					Runtime.getRuntime().exec(cmd);
+					System.out.println("INVOKE COMAND: "+cmd);
+					ProcessBuilder builder = new ProcessBuilder(cmd);
+			        builder.redirectErrorStream(true);
+			        Process p = builder.start();
+			        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			        String line;
+			        while (true) {
+			            line = r.readLine();
+			            if (line == null) { break; }
+			            System.out.println("CMD-SHIT---"+line);
+			        }
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

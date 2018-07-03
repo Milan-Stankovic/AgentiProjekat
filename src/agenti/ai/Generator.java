@@ -175,7 +175,8 @@ public class Generator extends Agent {
 			    };*/
 			try {
 				//Runtime.getRuntime().exec({"cmd.exe", "cd AiTest"});
-				ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "cd \"C:\\Users\\ilija\\AiTest\" && generator.py");
+				System.out.println("INVOKE COMAND: "+cmd);
+				ProcessBuilder builder = new ProcessBuilder(cmd);
 			        builder.redirectErrorStream(true);
 			        Process p = builder.start();
 			        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
