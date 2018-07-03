@@ -235,10 +235,10 @@ public class Rest implements RestRemote {
 					"cd \"C:\\Users\\ilija\\AiTest\" &&"+
 					"generator.py ";
 		
-		String sav1 = "C:\\Users\\ilija\\AiTest\\input.txt";
-		String sav2 = "C:\\Users\\milan\\AiTest\\input.txt";
-		String sav3 = "C:\\Users\\ilija\\AiTest\\output.txt";
-		String sav4 = "C:\\Users\\milan\\AiTest\\output.txt";
+		String sav1 = "C:\\Users\\ilija\\AiTest\\input";
+		String sav2 = "C:\\Users\\milan\\AiTest\\input";
+		String sav3 = "C:\\Users\\ilija\\AiTest\\output";
+		String sav4 = "C:\\Users\\milan\\AiTest\\output";
 		temp.put("DIS_LOC", s1);
 		temp.put("DIS_RES_LOC", sav2);
 		temp.put("DIS_SAVE_LOC", sav4);
