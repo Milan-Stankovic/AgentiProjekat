@@ -117,30 +117,35 @@ private int broj_generacija=-1;
 		}else if (poruka.getPerformative().equals(Performative.RETURNRESULTDISCRIMINATOR)) {
 			
 			if(broj_max==broj_generacija) {
-				String[] cmd = poruka.getProtocol().split(",");
+				final String[] cmd = poruka.getProtocol().split(",");
 						/*{
 				        "/bin/bash",
 				        "-c",
 				        "echo password | python script.py '" + packet.toString() + "'"
 				    };*/
-				try {
-					System.out.println("INVOKE COMAND: "+cmd);
-					ProcessBuilder builder = new ProcessBuilder(cmd);
-			        builder.redirectErrorStream(true);
-			        Process p = builder.start();
-			        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			        String line;
-			        while (true) {
-			            line = r.readLine();
-			            if (line == null) { break; }
-			            System.out.println("CMD-SHIT---"+line);
-			        }
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			Thread t1 = new Thread() {
+	            @Override
+	            public void run() {
+					try {
+						System.out.println("INVOKE COMAND: "+cmd);
+						ProcessBuilder builder = new ProcessBuilder(cmd);
+				        builder.redirectErrorStream(true);
+				        Process p = builder.start();
+				        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				        String line;
+				        while (true) {
+				            line = r.readLine();
+				            if (line == null) { break; }
+				            System.out.println("CMD-SHIT---"+line);
+				        }
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-			}
-			
+				
+			};
+			t1.start();
 			if(broj_generacija==0) {
 				
 				ACLPoruka next = new ACLPoruka();
@@ -227,4 +232,5 @@ private int broj_generacija=-1;
 		
 	}
 	
+}
 }

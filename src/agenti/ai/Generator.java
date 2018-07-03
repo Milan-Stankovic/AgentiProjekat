@@ -166,31 +166,36 @@ public class Generator extends Agent {
 			System.out.println("STARTUJE GAN U GENERATORU");
 		
 			
-			String[] cmd = poruka.getProtocol().split(",");
+			final String[] cmd = poruka.getProtocol().split(",");
 					
 					/*{
 			        "/bin/bash",
 			        "-c",
 			        "echo password | python script.py '" + packet.toString() + "'"
 			    };*/
-			try {
-				//Runtime.getRuntime().exec({"cmd.exe", "cd AiTest"});
-				System.out.println("INVOKE COMAND: "+cmd);
-				ProcessBuilder builder = new ProcessBuilder(cmd);
-			        builder.redirectErrorStream(true);
-			        Process p = builder.start();
-			        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			        String line;
-			        while (true) {
-			            line = r.readLine();
-			            if (line == null) { break; }
-			            System.out.println("CMD-SHIT---"+line);
-			        }
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+			Thread t = new Thread() {
+	            @Override
+	            public void run() {
+					try {
+						//Runtime.getRuntime().exec({"cmd.exe", "cd AiTest"});
+						System.out.println("INVOKE COMAND: "+cmd);
+						ProcessBuilder builder = new ProcessBuilder(cmd);
+					        builder.redirectErrorStream(true);
+					        Process p = builder.start();
+					        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+					        String line;
+					        while (true) {
+					            line = r.readLine();
+					            if (line == null) { break; }
+					            System.out.println("CMD-SHIT---"+line);
+					        }
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	            }
+			};
+			t.start();
 		
 			ACLPoruka next = new ACLPoruka();
 			next.setSender(this.aid);
