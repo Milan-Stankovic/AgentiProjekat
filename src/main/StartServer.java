@@ -67,6 +67,16 @@ public class StartServer {
 	@PostConstruct
 	public void handshake() {
 		
+		PrintStream out;
+		try {
+			out = new PrintStream(new FileOutputStream("erroriiiii.txt"));
+			System.setOut(out);
+			System.setErr(out);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		//ucitavanje IP i kreiranje agentskog centra
 		if(loadIp()) {
