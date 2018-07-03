@@ -78,7 +78,7 @@ private int broj_generacija=-1;
 			} 
 			
 			String preneseno = (String) poruka.getContentObj();
-			writeFile(preneseno, saveLoc);
+			writeFile(preneseno, saveLoc+"/input.txt");
 			
 			
 			System.out.println("SACUVAO");
@@ -200,7 +200,7 @@ private int broj_generacija=-1;
 									next2.setSender(thisAid);
 									next2.setReceivers(new AID[] { generator });
 									next2.setPerformative(Performative.RETURNRESULTDISCRIMINATOR);
-									next2.setContentObj(readFile(temp.getOntology())); // CEO FAJL DOBIJAS AKO OVO NE RADI, JEDAN SKIP
+									next2.setContentObj(readFile(temp.getOntology()+"/output.txt")); // CEO FAJL DOBIJAS AKO OVO NE RADI, JEDAN SKIP
 									next2.setConversationID(temp.getConversationID());
 									System.out.println("SALJEM DALJE");
 									broj_generacija--;
