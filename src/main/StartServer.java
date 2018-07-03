@@ -62,50 +62,7 @@ public class StartServer {
 	
 	private String alias;
 	
-	private void hardCodeAI(AgentType generator) {
-		Generator gen = new Generator();
-		gen.setAid(new AID("GeneratorAI", db.getLokalniCentar(), generator));
-		ArrayList<Agent> agents = new ArrayList<>();
-		agents.add(gen);
-		ArrayList<AgentInterface> ai = (ArrayList<AgentInterface>) rest.getInterfaces((ArrayList) agents);
-		db.addAllAgents(ai);
-		
-		ACLPoruka nova = new ACLPoruka();
-		nova.setContentObj(1);
-		nova.setReceivers(new AID[] {gen.getAid()});
-		nova.setConversationID("ConvoIdAI");
-		HashMap<String, Object> temp = new HashMap<>();
-		
-		/*
-		 * 
-			        "cd AiTest",
-			        "-c",
-			        "echo password | python script.py '" + packet.toString() + "'"
-			        */
-		String s1 = "/cd AiTest,"+
-					""+
-					"discriminator.py ";
-		String s2 = "/cd AiTest,"+
-					""+
-					"generator.py ";
-		
-		String sav1 = "C:\\Users\\ilija\\AiTest\\input.txt";
-		String sav2 = "C:\\Users\\milan\\AiTest\\input.txt";
-		String sav3 = "C:\\Users\\ilija\\AiTest\\output.txt";
-		String sav4 = "C:\\Users\\milan\\AiTest\\output.txt";
-		temp.put("DIS_LOC", s1);
-		temp.put("DIS_RES_LOC", sav2);
-		temp.put("DIS_SAVE_LOC", sav4);
-		temp.put("GEN_LOC", s2);
-		temp.put("GEN_RES_LOC", sav1);
-		temp.put("GEN_SAVE_LOC", sav3);
-		
-		nova.setUserArgs(temp);
-		nova.setPerformative(Performative.STARTAI);
-		
-		
-		db.setAiTest(nova);
-	}
+	
 	
 	@PostConstruct
 	public void handshake() {
@@ -129,9 +86,7 @@ public class StartServer {
 				AgentType tip1 = new AgentType();
 				tip1.setModule("EJB");
 				tip1.setName("Pong");
-				AgentType tip2 = new AgentType();
-				tip2.setModule("EJB");
-				tip2.setName("Generator");
+				
 				AgentType tip3 = new AgentType();
 				tip3.setModule("EJB");
 				tip3.setName("Discriminator");
@@ -143,7 +98,7 @@ public class StartServer {
 				db.setTipovi(tipovi);
 
 				//zakomentarisi ako neces
-				hardCodeAI(tip2);
+
 				
 				System.out.println("Master node initiated. Prepare to be amazed.");
 			}

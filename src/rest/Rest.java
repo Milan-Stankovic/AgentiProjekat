@@ -2,6 +2,7 @@ package rest;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -27,6 +28,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
+import agenti.ai.Generator;
 import jms.JMSQueue;
 import model.ACLPoruka;
 import model.AID;
@@ -184,6 +186,7 @@ public class Rest implements RestRemote {
 	@Path("/messagesAI")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void sendMessageAI() {
+		hardCodeAI();
 		new JMSQueue(baza.getAiTest());
 	}
 	
@@ -204,6 +207,55 @@ public class Rest implements RestRemote {
 			temp.add(p);
 		}
 		return temp;
+	}
+	
+	private void hardCodeAI() {
+		final AgentType tip2 = new AgentType();
+		tip2.setModule("EJB");
+		tip2.setName("Generator");
+		baza.insertAgentType(tip2);
+		Generator gen = new Generator();
+		gen.setAid(new AID("GeneratorAI", baza.getLokalniCentar(), tip2));
+		ArrayList<Agent> agents = new ArrayList<>();
+		agents.add(gen);
+		ArrayList<AgentInterface> ai = (ArrayList<AgentInterface>) this.getInterfaces((ArrayList) agents);
+		baza.addAllAgents(ai);
+		
+		ACLPoruka nova = new ACLPoruka();
+		nova.setContentObj(1);
+		nova.setReceivers(new AID[] {gen.getAid()});
+		nova.setConversationID("ConvoIdAI");
+		HashMap<String, Object> temp = new HashMap<>();
+		
+		/*
+		 * 
+			        "cd AiTest",
+			        "-c",
+			        "echo password | python script.py '" + packet.toString() + "'"
+			        */
+		String s1 = "/cd AiTest,"+
+					""+
+					"discriminator.py ";
+		String s2 = "/cd AiTest,"+
+					""+
+					"generator.py ";
+		
+		String sav1 = "C:\\Users\\ilija\\AiTest\\input.txt";
+		String sav2 = "C:\\Users\\milan\\AiTest\\input.txt";
+		String sav3 = "C:\\Users\\ilija\\AiTest\\output.txt";
+		String sav4 = "C:\\Users\\milan\\AiTest\\output.txt";
+		temp.put("DIS_LOC", s1);
+		temp.put("DIS_RES_LOC", sav2);
+		temp.put("DIS_SAVE_LOC", sav4);
+		temp.put("GEN_LOC", s2);
+		temp.put("GEN_RES_LOC", sav1);
+		temp.put("GEN_SAVE_LOC", sav3);
+		
+		nova.setUserArgs(temp);
+		nova.setPerformative(Performative.STARTAI);
+		
+		
+		baza.setAiTest(nova);
 	}
 	
 	

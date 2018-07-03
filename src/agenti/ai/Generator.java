@@ -28,7 +28,6 @@ import model.AgentInterface;
 import model.Baza;
 import model.Performative;
 
-@Remote(AgentInterface.class)
 @Stateful
 public class Generator extends Agent {
 
@@ -67,8 +66,9 @@ public class Generator extends Agent {
 			temp.setContent("POCNI GAN");
 			temp.setSender(this.getAid());
 			
-			
-			HashMap<AID, AgentInterface> agenti = baza.getAgenti();
+			Baza bBB = baza;
+			if(bBB==null) System.out.println("BAZA JE NULL A NE AGENTI");
+			HashMap<AID, AgentInterface> agenti = bBB.getAgenti();
 			
 			System.out.println("Prosla baza u gene");
 			

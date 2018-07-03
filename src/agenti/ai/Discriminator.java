@@ -28,7 +28,6 @@ import model.AgentInterface;
 import model.Baza;
 import model.Performative;
 
-@Remote(AgentInterface.class)
 @Stateful
 public class Discriminator extends Agent{
 
