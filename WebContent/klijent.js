@@ -177,7 +177,8 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 				case 'PORUKA':
 					
 					$scope.aclPoruke.push(odlazni.ime);
-					$scope.$apply($scope.aclPoruke);
+					if(!$scope.$$phase) 
+						$scope.$apply($scope.aclPoruke);
 					
 					break;
 				case 'TYPE':
@@ -530,7 +531,7 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 			}
 		}
 		
-		
+		if(!$scope.$$phase) 
 	      	  $scope.$apply($scope.sender);
 	      
 		
