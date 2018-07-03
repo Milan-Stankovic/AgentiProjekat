@@ -461,6 +461,21 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
     	
 	}
     
+    $scope.startAI = function(){
+    	
+		$http({
+		  method: 'GET',
+		  url: 'http://localhost:8096/AgentiProjekat/rest/agentskiCentar/messagesAI'
+		}).then(function successCallback(response) {
+			
+			console.log("POSLAO AI");
+			
+		  }, function errorCallback(response) {
+			console.log('Greska kod slanja AI');
+		  });
+    	
+    }
+    
     $scope.reset = function(selectedPerform, selectedSender, selectedReceivers, replyTo, content, language, encoding, ontology, protocol, convId, replyWith, replyBy){
     	$scope.selectedPerform = undefined;
     	$scope.selectedSender = undefined;
