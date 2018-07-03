@@ -93,7 +93,6 @@ public class StartServer {
 				ArrayList<AgentType> tipovi = new ArrayList<>();
 				tipovi.add(tip);
 				tipovi.add(tip1);
-				tipovi.add(tip2);
 				tipovi.add(tip3);
 				db.setTipovi(tipovi);
 
