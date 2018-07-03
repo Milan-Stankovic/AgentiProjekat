@@ -99,14 +99,15 @@ private int broj_generacija=-1;
 			saveLoc=poruka.getLanguage();
 			broj_max=broj_generacija;
 			
-		
+		/*
 		
 			ACLPoruka next = new ACLPoruka();
 			next.setSender(this.aid);
 			next.setReceivers(new AID[] { this.aid });
-			next.setPerformative(Performative.RETURNRESULTGENERATOR);
+			next.setPerformative(Performative.RETURNRESULTDISCRIMINATOR);
 			next.setOntology(poruka.getOntology());
 			next.setLanguage(poruka.getLanguage());
+			*/
 	
 			System.out.println("POCEO GAN");
 			

@@ -193,6 +193,8 @@ public class Generator extends Agent {
 			
 		}else if (poruka.getPerformative().equals(Performative.RETURNRESULTGENERATOR)) {
 			
+			System.out.println("RETURNRESULTGENERATOR U GENERATORU ");
+			
 			if(broj_generacija==0) {
 				
 				ACLPoruka next = new ACLPoruka();
@@ -216,6 +218,8 @@ public class Generator extends Agent {
 			
 			else {
 			
+				System.out.println("RETURNRESULTGENERATOR U GENERATORU U ELSE DELU ");
+				
 				final ACLPoruka temp = poruka;
 				
 				final AID thisAid = this.aid;
@@ -225,6 +229,8 @@ public class Generator extends Agent {
 		            public void run() {
 		            	try {
 		            	
+		            	System.out.println("PRAVI WATCH SERVICE U GENERATORU ");
+		            		
 		            	WatchService watcher = FileSystems.getDefault().newWatchService();
 						Path dir = Paths.get(temp.getOntology());
 						WatchKey key = dir.register(watcher, StandardWatchEventKinds.ENTRY_MODIFY, StandardWatchEventKinds.ENTRY_CREATE);
@@ -242,7 +248,7 @@ public class Generator extends Agent {
 									System.out.println("TEK SE SADA KREIRAO FAJL");
 								}else {
 									
-
+									System.out.println("GENERATOR WATCH SERVICE ");
 									ACLPoruka next2 = new ACLPoruka();
 									next2.setSender(thisAid);
 									next2.setReceivers(new AID[] { diskriminator });
