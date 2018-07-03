@@ -33,6 +33,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
+import agenti.ai.Generator;
 import model.ACLPoruka;
 import model.AID;
 import model.Agent;
@@ -62,7 +63,8 @@ public class StartServer {
 	private String alias;
 	
 	private void hardCodeAI(AgentType generator) {
-		Agent gen = new Agent(new AID("GeneratorAI", db.getLokalniCentar(), generator));
+		Generator gen = new Generator();
+		gen.setAid(new AID("GeneratorAI", db.getLokalniCentar(), generator));
 		ArrayList<Agent> agents = new ArrayList<>();
 		agents.add(gen);
 		ArrayList<AgentInterface> ai = (ArrayList<AgentInterface>) rest.getInterfaces((ArrayList) agents);
