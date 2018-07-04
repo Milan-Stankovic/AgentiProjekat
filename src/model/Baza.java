@@ -237,6 +237,10 @@ public class Baza implements Serializable{
 			}
 		}
 		
+		
+
+		agenti.put(aid, agent);
+		
 		DolazniWsDTO d = new DolazniWsDTO();
 		d.setTip(TipWs.ACTIVE);
 		
@@ -244,8 +248,6 @@ public class Baza implements Serializable{
 			System.out.println("Za lokalnu sesiju: "+s);
 			ws.message(s, d);
 		}
-
-		agenti.put(aid, agent);
 		return true;
 	}
 
