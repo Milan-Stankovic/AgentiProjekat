@@ -136,6 +136,13 @@ public class Baza implements Serializable{
 		for(AgentType a:noviZaUpdate) {
 			insertAgentType(a);
 		}
+		
+		DolazniWsDTO d = new DolazniWsDTO();
+		d.setTip(TipWs.TYPE);
+		d.setObject(tipovi);
+		for(Session s:sesije) {
+			ws.message(s, d);
+		}
 	}
 	
 	public AgentType insertAgentType(AgentType noviZaUpdate) { 
