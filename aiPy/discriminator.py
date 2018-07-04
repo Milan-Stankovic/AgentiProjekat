@@ -1,5 +1,6 @@
 import time
 def main():
+  time.sleep(1)
   f = open("input/input.txt", "r")
   text = f.read()
   f.close()
