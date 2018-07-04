@@ -184,8 +184,8 @@ app.controller('klijentController', function($scope, $http, $timeout, $interval)
 				case 'TYPE':
 					
 					$scope.tipovi = odlazni.objekti;
-					
-					refresh();
+					if(!$scope.$$phase) 
+						$scope.$apply($scope.tipovi);
 					
 					break;
 				case 'ACTIVE':

@@ -95,7 +95,7 @@ public class WebSocket implements WebSocketRemote {
 								
 							odlazni2.setTip(TipWs.TYPE);
 								
-							List<AgentType> tipovi = agentskiCentar.getTipovi();
+							List<AgentType> tipovi = (List<AgentType>) ws.getObject();
 
 							for(AgentType temp : tipovi){
 								odlazni2.getObjekti().add(temp);
