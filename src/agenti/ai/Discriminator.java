@@ -90,6 +90,7 @@ private int broj_generacija=-1;
 			next.setOntology(ontology);
 			next.setLanguage(saveLoc);
 			next.setConversationID(poruka.getConversationID());
+			next.setProtocol(poruka.getProtocol());
 	
 			
 			new JMSQueue(next);
