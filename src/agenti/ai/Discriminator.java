@@ -45,6 +45,8 @@ private int broj_generacija=-1;
 	private int broj_max = -1;
 	
 	private String ontology="";
+	
+	private String protocol="";
 
 	
 
@@ -90,7 +92,7 @@ private int broj_generacija=-1;
 			next.setOntology(ontology);
 			next.setLanguage(saveLoc);
 			next.setConversationID(poruka.getConversationID());
-			next.setProtocol(poruka.getProtocol());
+			next.setProtocol(protocol);
 	
 			
 			new JMSQueue(next);
@@ -106,6 +108,7 @@ private int broj_generacija=-1;
 			broj_generacija=(int)poruka.getContentObj();
 			saveLoc=poruka.getEncoding(); // ENCODING RADI ZA ONT NE ZNAM
 			broj_max=broj_generacija;
+			protocol= poruka.getProtocol();
 
 	
 			System.out.println("POCEO GAN");
@@ -114,7 +117,7 @@ private int broj_generacija=-1;
 		}else if (poruka.getPerformative().equals(Performative.RETURNRESULTDISCRIMINATOR)) {
 			
 			if(broj_max==broj_generacija) {
-				final String[] cmd = poruka.getProtocol().split(",");
+				final String[] cmd = protocol.split(",");
 						/*{
 				        "/bin/bash",
 				        "-c",
