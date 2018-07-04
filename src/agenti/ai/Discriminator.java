@@ -78,7 +78,7 @@ private int broj_generacija=-1;
 			} 
 			
 			String preneseno = poruka.getEncoding();
-			writeFile(preneseno, saveLoc+"\input.txt");
+			writeFile(preneseno, saveLoc+"\\input.txt");
 			
 			
 			System.out.println("SACUVAO");
