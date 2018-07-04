@@ -236,6 +236,14 @@ public class Baza implements Serializable{
 				return false;
 			}
 		}
+		
+		DolazniWsDTO d = new DolazniWsDTO();
+		d.setTip(TipWs.ACTIVE);
+		
+		for(Session s: sesije) {
+			System.out.println("Za lokalnu sesiju: "+s);
+			ws.message(s, d);
+		}
 
 		agenti.put(aid, agent);
 		return true;
