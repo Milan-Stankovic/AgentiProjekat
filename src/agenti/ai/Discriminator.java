@@ -69,7 +69,7 @@ private int broj_generacija=-1;
 			
 			System.out.println(saveLoc);
 			
-			File f = new File(saveLoc);
+			File f = new File(saveLoc+"\\input.txt");
 			try {
 				Files.deleteIfExists(f.toPath());
 			} catch (IOException e) {

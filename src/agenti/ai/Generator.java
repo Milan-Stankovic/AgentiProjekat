@@ -146,7 +146,7 @@ public class Generator extends Agent {
 			System.out.println("END GAN");
 		}else if (poruka.getPerformative().equals(Performative.RETURNRESULTDISCRIMINATOR)) {
 		
-			File f = new File(saveLoc);
+			File f = new File(saveLoc+"\\input.txt");
 			try {
 				Files.deleteIfExists(f.toPath());
 			} catch (IOException e) {
