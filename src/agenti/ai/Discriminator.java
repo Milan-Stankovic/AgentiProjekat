@@ -101,7 +101,7 @@ private int broj_generacija=-1;
 			System.out.println("STARTUJE GAN U GENERATORU"+poruka);
 
 			generator=poruka.getSender();
-			ontology=poruka.getOntology();
+			ontology=poruka.getContent();
 			broj_generacija=(int)poruka.getContentObj();
 			saveLoc=poruka.getEncoding(); // ENCODING RADI ZA ONT NE ZNAM
 			broj_max=broj_generacija;
