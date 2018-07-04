@@ -200,7 +200,7 @@ private int broj_generacija=-1;
 									next2.setSender(thisAid);
 									next2.setReceivers(new AID[] { generator });
 									next2.setPerformative(Performative.RETURNRESULTDISCRIMINATOR);
-									next2.setEncoding(readFile(temp.getOntology()+"/output.txt")); // CEO FAJL DOBIJAS AKO OVO NE RADI, JEDAN SKIP
+									next2.setEncoding(readFile(temp.getOntology()+"\\output.txt")); // CEO FAJL DOBIJAS AKO OVO NE RADI, JEDAN SKIP
 									next2.setConversationID(temp.getEncoding()); // GRBA MOGUCE DA JE ONAJ ONTOLOGY PROBLEM :D
 									System.out.println("SALJEM DALJE");
 									broj_generacija--;

@@ -159,7 +159,7 @@ public class Generator extends Agent {
 			} 
 			
 			String preneseno = poruka.getEncoding();
-			writeFile(preneseno, saveLoc+"/input.txt");
+			writeFile(preneseno, saveLoc+"\\input.txt");
 			
 			ACLPoruka next = new ACLPoruka();
 			next.setSender(this.aid);
@@ -288,7 +288,7 @@ public class Generator extends Agent {
 									next2.setSender(thisAid);
 									next2.setReceivers(new AID[] { diskriminator });
 									next2.setPerformative(Performative.RETURNRESULTGENERATOR);
-									next2.setEncoding(readFile(temp.getOntology()+"/output.txt")); // CEO FAJL DOBIJAS
+									next2.setEncoding(readFile(temp.getOntology()+"\\output.txt")); // CEO FAJL DOBIJAS
 									System.out.println((String)next2.getEncoding());
 									next2.setConversationID(temp.getConversationID());
 									System.out.println("SALJEM DALJE");
